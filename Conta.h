@@ -5,18 +5,19 @@
 #include <string>
 #include <stdlib.h>
 #include <vector>
+#include "Data.h"
 
 class Conta
 {
     public:
         /* Construtor e destrutor */
-        Conta(const std::string, const std::string, const std::string, float);
+            Conta(const std::string, const std::string, const Data, float);
         ~Conta();
 
-        /* Métodos get */
+        /* Mï¿½todos get */
         std::string getNum() const;
         std::string getCPF() const;
-        std::string getData() const;
+        Data getData() const;
         float getSaldo();
         void getLancamentos(); //Extrato da conta;
         void printSaldo();
@@ -33,10 +34,10 @@ class Conta
 
     private:
         std::vector<float> lancamentos;
-
+        
         const std::string cpf;
         const std::string num_conta;
-        const std::string data_abertura;
+        const Data dataAbertura;
         float saldo_atual;
 };
 

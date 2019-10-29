@@ -1,5 +1,6 @@
 #include "Conta.h"
 #include "Cliente.h"
+#include "Data.h"
 #include <iostream>
 #include <string>
 #include <iomanip>
@@ -7,15 +8,15 @@
 #include <sstream>
 #include <list>
 
-/* Contador para número de contas */
+/* Contador para nï¿½mero de contas */
 int Conta::num_contas = 0;
 
-/* Construtor, inicia lista de lançamentos,
+/* Construtor, inicia lista de lanï¿½amentos,
    inicia parametros,
    incrementa contador;  */
 Conta::Conta(std::string CPF, std::string nconta,
-            std::string data, float saldo) : cpf(CPF),
-            num_conta(nconta), data_abertura(data)
+            Data data, float saldo) : cpf(CPF),
+            num_conta(nconta), dataAbertura(data)
 {
     this->saldo_atual = saldo;
     num_contas++;
@@ -38,9 +39,9 @@ std::string Conta::getCPF() const
     return this->cpf;
 }
 
-std::string Conta::getData() const
+Data Conta::getData() const
 {
-    return this->data_abertura;
+    return this->dataAbertura;
 }
 
 float Conta::getSaldo()
@@ -59,7 +60,7 @@ std::vector<float> Conta::getVector()
     return this->lancamentos;
 }
 
-/* Mostra na tela histórico de lançamentos(extrato) */
+/* Mostra na tela histï¿½rico de lanï¿½amentos(extrato) */
 void Conta::getLancamentos()
 {
     std::vector<float>::iterator itr;
@@ -72,7 +73,7 @@ void Conta::getLancamentos()
     std::cout << std::endl;
 }
 
-/* Métodos set */
+/* Mï¿½todos set */
 void Conta::updateSaldo(float valor, int operacao)
 {
     //operacao = 1: credito, operacao = 2: debito.
@@ -107,7 +108,7 @@ std::string Conta::toString() const {
     std::stringstream format;
     format << "Apresentando dados da conta..." << std::endl
         << "Numero da conta: " << this->num_conta << std::endl
-        << "CPF: " << this->cpf << std::endl << "Data de abertura: " << this->data_abertura
+        << "CPF: " << this->cpf << std::endl << "Data de abertura: " << this->dataAbertura.toString()
         << std::endl << "Saldo atual: " << std::fixed << std::setprecision(2) << this->saldo_atual << std::endl;
     return format.str();
 }
