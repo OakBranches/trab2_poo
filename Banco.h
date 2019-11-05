@@ -22,7 +22,7 @@ class Banco
         void rmv_conta_cpf(std::string);
         void set_cliente(std::string);
 
-        /* Mï¿½todo toString */
+        /* Método toString */
         std::string toString() const;
 
         /* getters para membros static */
@@ -40,7 +40,6 @@ class Banco
 
 
     private:
-        /* Lista de clientes e contas, composicao de objetos */
         std::list<Conta> listaContas;
         std::list<Cliente> listaClientes;
 
@@ -57,6 +56,7 @@ class Banco
         const bool is_valid_cnpj(std::string);
 
         //auxiliary functions
+        std::string intToStr(int, int, int);
         bool bissexto(int);
         int buscaClientecpf(std::string); //Busca um cpf de cliente cadastrado;
         int buscaContaNum(std::string); //Busca a conta com o numero respectivo;

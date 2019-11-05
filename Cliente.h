@@ -21,7 +21,7 @@ public:
 	const std::string get_email();
 
 	//toString
-	virtual std::string toString() const = 0;
+	const std::string toString();
 
 	//Static for count number of clients;
 	static int num_clientes;
