@@ -3,7 +3,6 @@
 #include "Conta.h"
 #include "PessoaFisica.h"
 #include "PessoaJuridica.h"
-#include "Data.h"
 #include <string>
 #include <sstream>
 #include <iostream>
@@ -31,19 +30,19 @@ Banco::~Banco() {
     }
 }
 
-/* Metodos */
+/* Métodos */
 
 void Banco::add_conta()
 {
-    //Inicializa variaveis da conta;
+    //Inicializa variáveis da conta;
     std::string numero_conta, data, cpf;
     int dia, mes, ano;
     float saldo;
-    
+
     std::cout << "Digite o numero da conta: " << "\n";
     std::cin >> numero_conta;
 
-    //Cria uma conta nova(se o numero for valido);
+    //Cria uma conta nova(se for válido);
     if (is_valid_numConta(numero_conta)) {
         do {
             std::cout << "Digite os dados da conta: " << "\n" << "CPF (ja cadastrado): ";
@@ -54,8 +53,7 @@ void Banco::add_conta()
             std::cout << "Data de abertura, no formato: 'dia mes ano': " << "\n";
             std::cin >> dia >> mes >> ano;
         } while (is_valid_data(dia, mes, ano) == false);
-        Data datac(dia, mes, ano);
-        data = datac.toString();
+        data = intToStr(dia, mes, ano);
 
         std::cout << "Saldo inicial:" << "\n";
         std::cin >> saldo;
@@ -76,7 +74,7 @@ const bool Banco::is_valid_cnpj(std::string cnpj)
 void Banco::add_cliente()
 {
     int opcaoCliente;
-    /* Variaveis para cadastro de cliente */
+    /* Variáveis para cadastro de cliente */
     std::string cpf, nome, endereco, email, telefone;
 
     std::cout << "Cadastrando cliente..." << std::endl;
@@ -267,7 +265,7 @@ const bool Banco::is_valid_email(std::string email){
 const bool Banco::is_valid_cpf(std::string cpf){
 	int i, repeated = 0;
 	std::list<Cliente>::iterator itr;
-	// Procura se hï¿½ algum cpf repetido na lista;
+	// Procura se há algum cpf repetido na lista;
 	for (i = 0; i < Cliente::num_clientes && itr != listaClientes.end(); i++){
         if(itr->get_cpf() == cpf){
 			repeated = 1;
@@ -279,6 +277,14 @@ const bool Banco::is_valid_cpf(std::string cpf){
 }
 
 //auxiliary functions//
+std::string Banco::intToStr(int dia, int mes, int ano) {
+    std::stringstream change;
+    std::string aux;
+    change << dia << "/" << mes << "/" << ano;
+    change >> aux;
+    return aux;
+}
+
 bool Banco::bissexto (int ano) {
     if ((ano % 400 == 0 || ano % 100 != 0) && ano % 4 == 0)
         return true;
@@ -288,7 +294,7 @@ bool Banco::bissexto (int ano) {
 int Banco::buscaClientecpf(std::string cpf) {
     std::list<Cliente>::iterator itr;
     int i = 0;
-    //procura se o cpf inserido estï¿½ cadastrado
+    //procura se o cpf inserido está cadastrado
 	for (itr = listaClientes.begin(); itr != listaClientes.end() && itr->get_cpf().compare(cpf) != 0; itr++) {
 		i++;
 	}
@@ -309,8 +315,8 @@ int Banco::buscaContaNum(std::string numeroBusca) {
         std::cout << "Conta nao encontrada." << '\n';
         return -1;
     }
-    //retorna o numero de passos, a partir do inicio, ate encontrar a conta
-    //com o numero em questao
+    //retorna o numero de passos, a partir do inicio, até encontrar a conta
+    //com o numero em questão
     return i;
 }
 
@@ -334,7 +340,7 @@ void Banco::get_lancamento(std::string numeroBusca) {
         itr++;
     }
     if ( numeroIteracoes != -1 )
-        itr->getLancamentos();
+        itr->getExtrato();
 }
 
 void Banco::get_montante()
