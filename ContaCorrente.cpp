@@ -1,11 +1,54 @@
 #include "ContaCorrente.h"
+#include <sstream>
+#include <string>
+#include <iomanip>
 
-ContaCorrente::ContaCorrente() {
+using namespace std;
+
+/* Construtor */
+ContaCorrente::ContaCorrente(string CPF, string nconta,
+                            Data data, float saldo,
+                            float limite, string CNPJ, string tipo) : Conta(CPF,
+                            nconta, data, saldo), cnpj(CNPJ), tipo_cliente(tipo) {
+    setLimiteCheque(limite);
 }
 
-ContaCorrente::ContaCorrente(const ContaCorrente& orig) {
+/* Destrutor */
+ContaCorrente::~ContaCorrente() {}
+
+/* Setter para limite do cheque especial */
+void ContaCorrente::setLimiteCheque(float limite) {
+    this->limite_cheque = (limite < 0) ? limite : 0;
 }
 
-ContaCorrente::~ContaCorrente() {
+/* Getters para atributos de conta corrente */
+float ContaCorrente::getLimiteCheque() const {
+    return this->limite_cheque;
 }
 
+string ContaCorrente::getTipoCliente() const {
+    return this->tipo_cliente;
+}
+
+string ContaCorrente::getCPForCNPJ() const {
+    if(tipo_cliente == "f")
+        return this->cpf;
+    return this->cnpj;
+}
+
+/* toString */
+
+string ContaCorrente::toString() const {
+    ostringstream aux;
+    if (tipo_cliente == "j") {
+        aux << "Apresentando dados da conta..." << std::endl
+            << "Tipo de conta: " << this->tipo_cliente << std::endl << "Numero da conta: " << this->num_conta << std::endl
+            << "CNPJ: " << this->cnpj << std::endl << "Data de abertura: " << this->dataAbertura.toString()
+            << std::endl << "Saldo atual: " << std::fixed << std::setprecision(2) << this->saldo_atual << std::endl
+            << std::fixed << std::setprecision(2) << this->limite_cheque << endl;
+    } else {
+        aux << "Tipo de conta: " << this->tipo_cliente << Conta::toString()  
+                << std::fixed << std::setprecision(2) << this->limite_cheque << endl;; 
+    }
+    return aux.str();
+}

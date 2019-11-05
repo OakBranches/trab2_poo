@@ -1,6 +1,7 @@
 #include "PessoaJuridica.h"
 
 #include <string>
+#include <sstream>
 #include <iostream>
 
 
@@ -48,4 +49,12 @@ void PessoaJuridica::set_fundacao(std::string fundacao)
 void PessoaJuridica::set_contrato(std::string contrato)
 {
     this->data_contrato = contrato;
+}
+
+std::string PessoaJuridica::toString() const {
+    std::ostringstream change;
+    change << Cliente::toString() << "CNPJ: " << this->cnpj << std::endl << "Ramo de atuacao: " 
+            << this->ramo_atuacao << std::endl << "Data de fundacao: " << this->data_fundacao 
+            << std::endl << "Data de contrato: " << this->data_contrato << std::endl;
+    return change.str();
 }

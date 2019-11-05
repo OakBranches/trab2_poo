@@ -7,7 +7,7 @@ class PessoaFisica : public Cliente
 {
     public:
         PessoaFisica(std::string, std::string, std::string, std::string, std::string);
-        virtual ~PessoaFisica();
+        ~PessoaFisica();
 
     protected:
 

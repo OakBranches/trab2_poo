@@ -8,11 +8,12 @@ class PessoaJuridica : public Cliente
     public:
         PessoaJuridica(std::string, std::string, std::string, std::string, std::string,
                        std::string, std::string, std::string, std::string);
-        virtual ~PessoaJuridica();
+        ~PessoaJuridica();
 
         // Setters
         void setPessoaJuridica(std::string, std::string, std::string, std::string);
-    protected:
+        //toString
+        virtual std::string toString() const;
 
     private:
         //variables
@@ -26,6 +27,7 @@ class PessoaJuridica : public Cliente
         void set_ramo(std::string);
         void set_fundacao(std::string);
         void set_contrato(std::string);
+        void set_nascimento(std::string);
 };
 
 #endif // PESSOAJURIDICA_H
