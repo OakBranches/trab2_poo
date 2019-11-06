@@ -1,11 +1,16 @@
 #include "ContaPoupanca.h"
 
-ContaPoupanca::ContaPoupanca() {
+// Inicializa contador
+int ContaPoupanca::count_poup = 0;
+
+ContaPoupanca::ContaPoupanca(std::string CPF, std::string nconta,
+            Data data, float saldo) : Conta(CPF, nconta, data, saldo) {
+    count_poup++;
+    cout << "Criando conta poupanca... " << '\n';
 }
 
-ContaPoupanca::ContaPoupanca(const ContaPoupanca& orig) {
-}
 
 ContaPoupanca::~ContaPoupanca() {
+    count_poup--;
 }
 

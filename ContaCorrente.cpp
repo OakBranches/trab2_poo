@@ -5,16 +5,23 @@
 
 using namespace std;
 
+/* Inicializacao da variavel estatica */
+int ContaCorrente::count_chain = 0;
+
 /* Construtor */
 ContaCorrente::ContaCorrente(string CPF, string nconta,
                             Data data, float saldo,
                             float limite, string CNPJ, string tipo) : Conta(CPF,
                             nconta, data, saldo), cnpj(CNPJ), tipo_cliente(tipo) {
     setLimiteCheque(limite);
+    count_chain++;
+    cout << "Criando conta corrente... " << '\n';
 }
 
 /* Destrutor */
-ContaCorrente::~ContaCorrente() {}
+ContaCorrente::~ContaCorrente() {
+    count_chain--;
+}
 
 /* Setter para limite do cheque especial */
 void ContaCorrente::setLimiteCheque(float limite) {

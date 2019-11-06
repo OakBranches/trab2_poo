@@ -18,7 +18,10 @@ public:
     std::string getTipoCliente() const;
     //toString
     virtual std::string toString() const;
-    
+
+    /* Contador para tipo conta corrente */
+    static int count_chain;
+
 private:
     const std::string cnpj;
     const std::string tipo_cliente;
