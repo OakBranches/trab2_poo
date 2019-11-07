@@ -2,15 +2,20 @@
 #include <string>
 #include <iostream>
 
+// Inicializa contador
+
+int PessoaFisica::count_f = 0;
+
 PessoaFisica::PessoaFisica(std::string nome, std::string cpf,
     std::string endereco, std::string telefone, std::string email)
     : Cliente(nome, cpf, endereco, telefone, email)
 {
     //ctor
     std::cout << "Cliente do tipo 'Pessoa Fisica' cadastrado." << '\n';
+    count_f++;
 }
 
 PessoaFisica::~PessoaFisica()
 {
-    //dtor
+    count_f--;
 }

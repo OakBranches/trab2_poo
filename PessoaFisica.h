@@ -9,6 +9,9 @@ class PessoaFisica : public Cliente
         PessoaFisica(std::string, std::string, std::string, std::string, std::string);
         ~PessoaFisica();
 
+        /* Contador para tipo pessoa fisica */
+        static int count_f;
+
     protected:
 
     private:

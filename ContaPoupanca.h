@@ -2,14 +2,16 @@
 #define CONTAPOUPANCA_H
 
 #include "Conta.h"
-
+/* Nada eh feito, pois eh a propria classe conta */
 class ContaPoupanca : public Conta {
 public:
-    ContaPoupanca();
+    /* Construtor e destrutor */
+    ContaPoupanca(const std::string, const std::string, const Data, float);
     ~ContaPoupanca();
-    virtual std::string toString() const;
+    
+    /* Contador para tipo conta poupanca */
+    static int count_poup;
 private:
-
 };
 
 #endif /* CONTAPOUPANCA_H */

@@ -5,6 +5,9 @@
 #include <iostream>
 
 
+//Inicializar variavel estatica
+int PessoaJuridica::count_j = 0;
+
 PessoaJuridica::PessoaJuridica(std::string nome, std::string cpf,
     std::string endereco, std::string telefone, std::string email,
     std::string cnpj, std::string ramo, std::string data_fundacao,
@@ -14,11 +17,13 @@ PessoaJuridica::PessoaJuridica(std::string nome, std::string cpf,
     //ctor
     this->setPessoaJuridica(cnpj, ramo, data_fundacao, data_contrato);
     std::cout << "Cliente do tipo 'Pessoa Juridica' cadastrado." << '\n';
+    count_j++;
 }
 
 PessoaJuridica::~PessoaJuridica()
 {
     //dtor
+    count_j--;
 }
 
 /* -setters- */

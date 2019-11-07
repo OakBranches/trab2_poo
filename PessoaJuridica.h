@@ -15,6 +15,9 @@ class PessoaJuridica : public Cliente
         //toString
         virtual std::string toString() const;
 
+        // Variavel estatica para tipo pessoa juridica
+        static int count_j;
+        
     private:
         //variables
         std::string cnpj;

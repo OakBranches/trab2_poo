@@ -1,6 +1,8 @@
 #include "Banco.h"
 #include "Cliente.h"
 #include "Conta.h"
+#include "ContaCorrente.h"
+#include "ContaPoupanca.h"
 #include "PessoaFisica.h"
 #include "PessoaJuridica.h"
 #include "Data.h"
