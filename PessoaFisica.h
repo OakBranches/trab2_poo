@@ -7,10 +7,7 @@ class PessoaFisica : public Cliente
 {
     public:
         PessoaFisica(std::string, std::string, std::string, std::string, std::string);
-        ~PessoaFisica();
-
-        /* Contador para tipo pessoa fisica */
-        static int count_f;
+        virtual ~PessoaFisica();
 
     protected:
 
