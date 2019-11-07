@@ -5,7 +5,10 @@
 
 class ContaCorrente : public Conta {
 public:
-    //Construtor
+    //Construtor para pessoa fisica
+    ContaCorrente(const std::string, const std::string, const Data, float, 
+            float, std::string = "\0", const std::string);
+    //Construtor para pessoa juridica
     ContaCorrente(const std::string, const std::string, const Data, float, 
             float, const std::string, const std::string);
     //Destrutor
@@ -14,7 +17,7 @@ public:
     void setLimiteCheque(float);
     //Getter
     float getLimiteCheque() const;
-    std::string getCPForCNPJ() const;
+    std::string getCNPJ() const;
     std::string getTipoCliente() const;
     //toString
     virtual std::string toString() const;
