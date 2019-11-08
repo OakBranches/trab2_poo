@@ -41,7 +41,11 @@ int main()
             case (2): {
                 cout << "Digite o CPF:" << '\n';
                 cin >> cpf;
-                banco.set_cliente(cpf);
+				bool i = banco.is_Juridico();
+				if(i)
+					banco.set_cliente_j(cpf);
+				else
+					banco.set_cliente_f(cpf);
                 cout << '\n';
                 break;
             }

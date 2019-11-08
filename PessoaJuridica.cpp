@@ -1,8 +1,12 @@
 #include "PessoaJuridica.h"
 
 #include <string>
+#include <sstream>
 #include <iostream>
 
+
+//Inicializar variavel estatica
+int PessoaJuridica::count_j = 0;
 
 PessoaJuridica::PessoaJuridica(std::string nome, std::string cpf,
     std::string endereco, std::string telefone, std::string email,
@@ -13,11 +17,13 @@ PessoaJuridica::PessoaJuridica(std::string nome, std::string cpf,
     //ctor
     this->setPessoaJuridica(cnpj, ramo, data_fundacao, data_contrato);
     std::cout << "Cliente do tipo 'Pessoa Juridica' cadastrado." << '\n';
+    count_j++;
 }
 
 PessoaJuridica::~PessoaJuridica()
 {
     //dtor
+    count_j--;
 }
 
 /* -setters- */
@@ -48,4 +54,12 @@ void PessoaJuridica::set_fundacao(std::string fundacao)
 void PessoaJuridica::set_contrato(std::string contrato)
 {
     this->data_contrato = contrato;
+}
+
+std::string PessoaJuridica::toString() const {
+    std::ostringstream change;
+    change << Cliente::toString() << "CNPJ: " << this->cnpj << std::endl << "Ramo de atuacao: " 
+            << this->ramo_atuacao << std::endl << "Data de fundacao: " << this->data_fundacao 
+            << std::endl << "Data de contrato: " << this->data_contrato << std::endl;
+    return change.str();
 }
