@@ -31,7 +31,7 @@ class Banco
         void set_cliente_f(std::string);
 		void set_cliente_j(std::string);
 
-        /* M�todo toString */
+        /* Método toString */
         std::string toString() const;
 
         /* getters para listas */
@@ -67,6 +67,7 @@ class Banco
 		
 
         //auxiliary functions
+        std::string intToStr(int, int, int);
         bool bissexto(int);
         int buscaCliente_cpf_j(std::string);
 		int buscaCliente_cpf_f(std::string);

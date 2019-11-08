@@ -1,6 +1,5 @@
 #include "Conta.h"
 #include "Cliente.h"
-#include "Data.h"
 #include <iostream>
 #include <string>
 #include <iomanip>
@@ -8,15 +7,15 @@
 #include <sstream>
 #include <list>
 
-/* Contador para nï¿½mero de contas */
+/* Contador para número de contas */
 int Conta::num_contas = 0;
 
-/* Construtor, inicia lista de lanï¿½amentos,
+/* Construtor, inicia lista de lançamentos,
    inicia parametros,
    incrementa contador;  */
 Conta::Conta(std::string CPF, std::string nconta,
-            Data data, float saldo) : cpf(CPF),
-            num_conta(nconta), dataAbertura(data)
+            std::string data, float saldo) : cpf(CPF),
+            num_conta(nconta), data_abertura(data)
 {
     this->saldo_atual = saldo;
     num_contas++;
@@ -39,9 +38,9 @@ std::string Conta::getCPF() const
     return this->cpf;
 }
 
-Data Conta::getData() const
+std::string Conta::getData() const
 {
-    return this->dataAbertura;
+    return this->data_abertura;
 }
 
 float Conta::getSaldo()
@@ -55,25 +54,21 @@ void Conta::printSaldo()
               << this->getSaldo() << "\n\n";
 }
 
-std::vector<float> Conta::getVector()
+Lancamentos Conta::getLancamentos()
 {
     return this->lancamentos;
 }
 
-/* Mostra na tela histï¿½rico de lanï¿½amentos(extrato) */
-void Conta::getLancamentos()
+/* Mostra na tela histórico de lançamentos(extrato) */
+void Conta::getExtrato()
 {
-    std::vector<float>::iterator itr;
-    for (itr = this->lancamentos.begin(); itr != this->lancamentos.end(); itr++) {
-        std::cout << "Lancamento: " << std::fixed << std::setprecision(2)
-                  << *itr << '\n';
-    }
+    std::cout << this->lancamentos.toString();
     std::cout << "Saldo final: " << std::fixed
               << std::setprecision(2) << this->getSaldo();
     std::cout << std::endl;
 }
 
-/* Mï¿½todos set */
+/* Métodos set */
 void Conta::updateSaldo(float valor, int operacao)
 {
     //operacao = 1: credito, operacao = 2: debito.
@@ -92,11 +87,11 @@ void Conta::novoLancamento(float valor, int operacao)
     if (operacao == 2 && this->saldo_atual - valor >= 0) {
         this->saldo_atual -= valor;
         valor *= (-1);
-        this->lancamentos.push_back(valor);
+        this->lancamentos.novoLancamento(valor);
     }
     else if (operacao == 1 && valor > 0) {
         this->saldo_atual += valor;
-        this->lancamentos.push_back(valor);
+        this->lancamentos.novoLancamento(valor);
     }
 
     else std::cout << "Operacao invalida." << '\n';
@@ -108,7 +103,7 @@ std::string Conta::toString() const {
     std::stringstream format;
     format << "Apresentando dados da conta..." << std::endl
         << "Numero da conta: " << this->num_conta << std::endl
-        << "CPF: " << this->cpf << std::endl << "Data de abertura: " << this->dataAbertura.toString()
+        << "CPF: " << this->cpf << std::endl << "Data de abertura: " << this->data_abertura
         << std::endl << "Saldo atual: " << std::fixed << std::setprecision(2) << this->saldo_atual << std::endl;
     return format.str();
 }

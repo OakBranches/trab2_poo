@@ -1,5 +1,6 @@
 #include "Data.h"
 #include <sstream>
+#include <string>
 
 /*
  * Atribui uma data atraves de setters,
@@ -39,6 +40,6 @@ int Data::get_ano() const {
 
 std::string Data::toString() const {
     std::ostringstream aux;
-    aux << << dia << "/" << mes << "/" << ano;
+    aux << dia << "/" << mes << "/" << ano;
     return aux.str();
 }
