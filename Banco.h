@@ -6,6 +6,8 @@
 #include "Conta.h"
 #include "ContaCorrente.h"
 #include "ContaPoupanca.h"
+#include "PessoaFisica.h"
+#include "PessoaJuridica.h"
 #include <string>
 #include <list>
 
@@ -43,8 +45,8 @@ class Banco
 		bool is_Juridico();
 		bool is_ContaCorrente();
         //procura uma conta para fazer lancamento
-        void novoLancamento(std::string, float, int);
-
+        void novoLancamento_p(std::string, float, int);
+        void novoLancamento_c(std::string, float, int);
     private:
         /* Lista de clientes e contas, composicao de objetos */
         std::list<ContaCorrente> listaContas_c;
