@@ -16,7 +16,7 @@ class Conta
 
         /* M�todos get */
         std::string getNum() const;
-        std::string getCPForCNPJ() const;
+        std::string getCPF() const;
         Data getData() const;
         float getSaldo();
         void getLancamentos(); //Extrato da conta;

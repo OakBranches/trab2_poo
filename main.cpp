@@ -39,13 +39,9 @@ int main()
                 break;
             }
             case (2): {
-            	bool test = banco.is_Juridico();
                 cout << "Digite o CPF:" << '\n';
                 cin >> cpf;
-                if(test)
-                	banco.set_cliente_j(cpf);
-                else
-                	banco.set_cliente_f(cpf);
+                banco.set_cliente(cpf);
                 cout << '\n';
                 break;
             }
@@ -91,13 +87,9 @@ int main()
                 break;
             }
             case (8): {
-            	bool test = banco.is_ContaCorrente();
                 cout << "Digite o numero da conta:" << '\n';
                 cin >> num_conta;
-                if(test)
-                	banco.get_lancamento_c(num_conta);
-                else
-                	banco.get_lancamento_p(num_conta);
+                banco.get_lancamento(num_conta);
                 cout << '\n';
                 break;
             }
