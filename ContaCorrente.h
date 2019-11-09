@@ -7,7 +7,7 @@ class ContaCorrente : public Conta {
 public:
     //Construtor para pessoa fisica
     ContaCorrente(const std::string, const std::string, const Data, float, 
-            float, std::string = "\0", const std::string);
+            float, const std::string );
     //Construtor para pessoa juridica
     ContaCorrente(const std::string, const std::string, const Data, float, 
             float, const std::string, const std::string);

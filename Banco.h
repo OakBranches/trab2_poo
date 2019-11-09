@@ -6,6 +6,8 @@
 #include "Conta.h"
 #include "ContaCorrente.h"
 #include "ContaPoupanca.h"
+#include "PessoaFisica.h"
+#include "PessoaJuridica.h"
 #include <string>
 #include <list>
 
@@ -19,15 +21,18 @@ class Banco
         /* Adiciona/remove/altera clientes/contas. */
         void add_cliente();
 
+		void add_conta();
+
         void add_conta_p();
 		void add_conta_c();
+		void rmv_cliente(std::string);
 
         void rmv_cliente_f(std::string);
 		void rmv_cliente_j(std::string);
 
         void rmv_conta(std::string);
 
-
+		void set_cliente(std::string);
         void set_cliente_f(std::string);
 		void set_cliente_j(std::string);
 
@@ -37,12 +42,15 @@ class Banco
         /* getters para listas */
         void get_clientes();
         void get_contas();
+		void get_lancamento(std::string);
         void get_lancamento_c(std::string);
 		void get_lancamento_p(std::string);
 		void get_montante();
 		bool is_Juridico();
 		bool is_ContaCorrente();
         //procura uma conta para fazer lancamento
+		void novoLancamento(std::string, float, int);
+
         void novoLancamento_c(std::string, float, int);
 		void novoLancamento_p(std::string, float, int);
     private:

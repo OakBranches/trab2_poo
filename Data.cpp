@@ -40,6 +40,6 @@ int Data::get_ano() const {
 
 std::string Data::toString() const {
     std::ostringstream aux;
-    aux << dia << "/" << mes << "/" << ano;
+    aux << this->dia << "/" << this->mes << "/" << this->ano;
     return aux.str();
 }

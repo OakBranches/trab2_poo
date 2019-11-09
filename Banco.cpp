@@ -41,14 +41,25 @@ bool Banco::is_ContaCorrente() {
 	int i;
 	do {
 		std::cout << "Digite o tipo de Conta: \n1-Conta Corrente|2-Conta Poupanca\n";
+		std::cin >> i;
 	} while (i != 1 && i != 2);
 	return(i == 1);
+}
+
+void Banco::novoLancamento(std::string s, float a, int p)
+{
+	bool i = is_ContaCorrente();
+	if (i)
+		novoLancamento_c( s,  a,  p);
+	else
+		novoLancamento_p(s, a, p);
 }
 
 bool Banco::is_Juridico() {
 	int i;
 	do {
 		std::cout << "Digite o tipo de Cliente: \n1-Pessoa Juridica|2-Pessoa Fisica\n";
+		std::cin >> i;
 	} while (i != 1 && i != 2);
 	return(i == 1);
 }
@@ -99,6 +110,15 @@ void Banco::add_conta_c()
     }
     else
         std::cout << "Numero ja utilizado. Tente novamente." << "\n";
+}
+
+void Banco::rmv_cliente(std::string s)
+{
+	bool i=is_Juridico();
+	if (i)
+		rmv_cliente_j(s);
+	else
+		rmv_cliente_f(s);
 }
 
 void Banco::add_conta_p()
@@ -213,6 +233,15 @@ void Banco::add_cliente()
     }
 }
 
+void Banco::add_conta()
+{
+	bool i = is_ContaCorrente();
+	if (i)
+		add_conta_c();
+	else
+		add_conta_p();
+}
+
 void Banco::get_clientes()
 {
 	std::cout << "\n\nPESSOAS FISICAS\n\n";
@@ -223,6 +252,15 @@ void Banco::get_clientes()
 	std::list<PessoaJuridica>::iterator it;
 	for (it = listaClientes_j.begin(); it != listaClientes_j.end(); it++)
 		std::cout << (*it).toString() << "\n";
+}
+
+void Banco::set_cliente(std::string s)
+{
+	bool i = is_Juridico();
+	if (i)
+		set_cliente_j(s);
+	else
+		set_cliente_f(s);
 }
 
 void Banco::set_cliente_f(std::string busca)
@@ -291,6 +329,15 @@ void Banco::get_contas()
 	std::cout << "\n\nCONTAS POUPANCAS\n\n";
 	for(it = listaContas_p.begin(); it != listaContas_p.end(); it++)
 		std::cout << it->toString() << "\n";
+}
+
+void Banco::get_lancamento(std::string s)
+{
+	bool i = is_ContaCorrente();
+	if (i)
+		get_lancamento_c(s);
+	else
+		get_lancamento_p(s);
 }
 
 void Banco::rmv_cliente_f(std::string retirar) {
@@ -496,7 +543,7 @@ int Banco::buscaCliente_cpf_f(std::string cpf) {
 	for (it = listaClientes_f.begin(); it != listaClientes_f.end() && it->get_cpf().compare(cpf) != 0; it++) {
 		j++;
 	}
-	if (it == listaClientes_f.end) {
+	if (it == listaClientes_f.end()) {
 		std::cout << "CPF nao encontrado." << '\n';
 		return -1;
 	}

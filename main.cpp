@@ -39,30 +39,22 @@ int main()
                 break;
             }
             case (2): {
-            	bool test = banco.is_Juridico();
                 cout << "Digite o CPF:" << '\n';
                 cin >> cpf;
-                if(test)
-                	banco.set_cliente_j(cpf);
-                else
-                	banco.set_cliente_f(cpf);
+                banco.set_cliente(cpf);
                 cout << '\n';
                 break;
             }
             case (3): {
-            	bool test = banco.is_Juridico();
                 cout << "Digite o CPF:" << '\n';
                 cin >> cpf;
-                if(test)
-                	banco.rmv_cliente_j(cpf);
-                else
-                	banco.rmv_cliente_f(cpf);
+                banco.rmv_cliente(cpf);
                 cout << '\n';
                 break;
             }
             case (4): {
                 banco.get_clientes();
-                if ((ContaCorrente::count_chain + ContaPoupanca::num_contas) == 0) {
+                if (PessoaFisica::count_f+PessoaJuridica::count_j == 0) {
                     cout << "Nenhum cliente cadastrado. Deseja cadastrar um novo? (1- sim | 0- nao)" << '\n';
                     cin >> aux;
                     if (aux)
@@ -72,11 +64,7 @@ int main()
                 break;
             }
             case (5): {
-            	bool test = banco.is_ContaCorrente();
-            	if(test)
-            		banco.add_conta_c();
-            	else
-            		banco.add_conta_p();
+                banco.add_conta();
                 cout << '\n';
                 break;
             }
@@ -88,28 +76,20 @@ int main()
                 break;
             }
             case (7): {
-            	bool a = banco.is_ContaCorrente();
                 cout << "Digite o numero da conta:" << '\n';
                 cin >> num_conta;
                 cout << "Digite o tipo de lancamento: (1- credito | 2- debito)" << '\n';
                 cin >> aux;
                 cout << "Digite o valor do lancamento:" << '\n';
                 cin >> valor;
-                if(a)
-                	banco.novoLancamento_c(num_conta, valor, aux);
-                else
-                	banco.novoLancamento_c(num_conta, valor, aux);
+                banco.novoLancamento(num_conta, valor, aux);
                 cout << '\n';
                 break;
             }
             case (8): {
-            	bool test = banco.is_ContaCorrente();
                 cout << "Digite o numero da conta:" << '\n';
                 cin >> num_conta;
-                if(test)
-                	banco.get_lancamento_c(num_conta);
-                else
-                	banco.get_lancamento_p(num_conta);
+                banco.get_lancamento(num_conta);
                 cout << '\n';
                 break;
             }
