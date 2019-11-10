@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <stdlib.h>
 #include <sstream>
+#include "Lancamentos.h"
 #include <list>
 
 /* Contador para n�mero de contas */
@@ -44,24 +45,24 @@ Data Conta::getData() const
     return this->dataAbertura;
 }
 
-float Conta::getSaldo()
+float Conta::getSaldo() const
 {
     return this->saldo_atual;
 }
 
-void Conta::printSaldo()
+void Conta::printSaldo() const
 {
     std::cout << "Saldo atual: " << std::fixed << std::setprecision(2)
               << this->getSaldo() << "\n\n";
 }
 
-std::vector<float> Conta::getVector()
+std::vector<float> Conta::getVector() const
 {
     return this->lancamentos;
 }
 
 /* Mostra na tela hist�rico de lan�amentos(extrato) */
-void Conta::getLancamentos()
+void Conta::getLancamentos() const
 {
     std::vector<float>::iterator itr;
     for (itr = this->lancamentos.begin(); itr != this->lancamentos.end(); itr++) {

@@ -18,10 +18,10 @@ class Conta
         std::string getNum() const;
         std::string getCPF() const;
         Data getData() const;
-        float getSaldo();
-        void getLancamentos(); //Extrato da conta;
-        void printSaldo();
-        std::vector<float> getVector();
+        float getSaldo() const;
+        void getLancamentos() const; //Extrato da conta;
+        void printSaldo() const;
+        std::vector<float> getVector() const;
         /* Metodo toString */
         std::string toString() const;
 

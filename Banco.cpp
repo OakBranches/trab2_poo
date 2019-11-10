@@ -84,7 +84,7 @@ void Banco::add_conta_c()
         do {
             std::cout << "Digite os dados da conta: " << "\n" << "CPF (ja cadastrado): ";
             std::cin >> cpf;
-		} while (buscaCliente_cpf_f(cpf) < 0 && tipo[0] == 'f' || buscaCliente_cpf_j(cpf) < 0 && tipo[0] == 'j');
+		} while ((buscaCliente_cpf_f(cpf) < 0 && tipo[0] == 'f') || (buscaCliente_cpf_j(cpf) < 0 && tipo[0] == 'j'));
 		if (tipo[0] == 'j') {
 			do {
 				std::cout << "Digite o CNPJ" << "\n" ;
@@ -179,9 +179,9 @@ void Banco::add_cliente()
     else if (opcaoCliente == 2) std::cout << "CPF do socio majoritario: ";
 	do {
 		std::cin >> cpf;
-		if (!is_valid_cpf_f(cpf)&& opcaoCliente == 1|| !is_valid_cpf_j(cpf) && opcaoCliente == 2)
+		if ((!is_valid_cpf_f(cpf) && opcaoCliente == 1) || (!is_valid_cpf_j(cpf) && opcaoCliente == 2))
 			std::cout << "CPF invalido ou ja utilizado. Tente novamente." << '\n';
-	} while (!is_valid_cpf_f(cpf) && opcaoCliente == 1 || !is_valid_cpf_j(cpf) && opcaoCliente == 2);
+	} while ((!is_valid_cpf_f(cpf) && opcaoCliente == 1) || (!is_valid_cpf_j(cpf) && opcaoCliente == 2));
 	//std::cout << cpf<<std::endl;
 	std::cout << "Nome: ";
 	scanf("\n");

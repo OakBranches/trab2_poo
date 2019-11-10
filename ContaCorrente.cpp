@@ -58,9 +58,10 @@ string ContaCorrente::toString() const {
     ostringstream aux;
     if (tipo_cliente == "j") {
         aux << "Apresentando dados da conta..." << std::endl
-            << "Tipo de conta: " << this->tipo_cliente << std::endl << "Numero da conta: " << this->num_conta << std::endl
-            << "CNPJ: " << this->cnpj << std::endl << "CPF: " << this->getCPF() << std::endl << "Data de abertura: " << this->dataAbertura.toString()
-            << std::endl << "Saldo atual: " << std::fixed << std::setprecision(2) << this->saldo_atual << std::endl
+            << "Tipo de conta: " << this->tipo_cliente 
+            << std::endl << "Numero da conta: " << this->getNum()<< std::endl
+            << "CNPJ: " << this->cnpj << std::endl << "CPF: " << this->getCPF() << std::endl << "Data de abertura: " << "this->getData()"
+            << std::endl << "Saldo atual: " << std::fixed << std::setprecision(2) << this->getSaldo() << std::endl
             << std::fixed << std::setprecision(2) << this->limite_cheque << endl;
     } else {
         aux << "Tipo de conta: " << this->tipo_cliente << Conta::toString()  
