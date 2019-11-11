@@ -58,7 +58,7 @@ void Banco::novoLancamento(std::string s, float a, int p)
 bool Banco::is_Juridico() {
 	int i;
 	do {
-		std::cout << "Digite o tipo de Cliente: \n1-Pessoa Juridica|2-Pessoa Fisica\n";
+		std::cout << "Digite o tipo de Cliente: (1- Pessoa Juridica | 2- Pessoa Fisica)\n";
 		std::cin >> i;
 	} while (i != 1 && i != 2);
 	return(i == 1);
@@ -72,7 +72,7 @@ void Banco::add_conta_c()
     float saldo,limite;
 	std::string tipo,cnpj;
 	do {
-		std::cout << "Pessoa Juridica: ou Pessoa Fisica? (j/f)" << "\n";
+		std::cout << "Pessoa Juridica ou Pessoa Fisica? (j/f)" << "\n";
 		std::cin >> tipo;
 	} while (tipo[0] != 'j' && tipo[0] != 'f');
 
@@ -84,7 +84,7 @@ void Banco::add_conta_c()
         do {
             std::cout << "Digite os dados da conta: " << "\n" << "CPF (ja cadastrado): ";
             std::cin >> cpf;
-		} while ((buscaCliente_cpf_f(cpf) < 0 && tipo[0] == 'f') || (buscaCliente_cpf_j(cpf) < 0 && tipo[0] == 'j'));
+		} while ((buscaCliente_cpf_f(cpf) == -1 && tipo[0] == 'f') || (buscaCliente_cpf_j(cpf) == -1 && tipo[0] == 'j'));
 		if (tipo[0] == 'j') {
 			do {
 				std::cout << "Digite o CNPJ" << "\n" ;
@@ -96,15 +96,15 @@ void Banco::add_conta_c()
             std::cin >> dia >> mes >> ano;
         } while (is_valid_data(dia, mes, ano) == false);
         Data data(dia, mes, ano);
-		std::cout << "Limite do Cartao:" << "\n";
+		std::cout << "Limite do cheque especial:" << "\n";
 		std::cin >> limite;
         std::cout << "Saldo inicial:" << "\n";
         std::cin >> saldo;
 		if (tipo[0] == 'j') {
-			listaContas_c.push_back(ContaCorrente(cpf, numero_conta, data, saldo,limite,cnpj,tipo));
+			listaContas_c.push_back(ContaCorrente(cpf, numero_conta, data, saldo, limite, cnpj, tipo));
 		}
 		else {
-			listaContas_c.push_back(ContaCorrente(cpf, numero_conta, data, saldo,limite,tipo));
+			listaContas_c.push_back(ContaCorrente(cpf, numero_conta, data, saldo, limite, tipo));
 
 		}
     }
@@ -114,7 +114,7 @@ void Banco::add_conta_c()
 
 void Banco::rmv_cliente(std::string s)
 {
-	bool i=is_Juridico();
+	bool i = is_Juridico();
 	if (i)
 		rmv_cliente_j(s);
 	else
@@ -168,7 +168,7 @@ void Banco::add_cliente()
 
     std::cout << "Cadastrando cliente..." << std::endl;
 	do {
-        std::cout << "Escolha o tipo de cliente: (1- Pessoa Fisica|2- Pessoa Juridica)" << '\n';
+        std::cout << "Escolha o tipo de cliente: (1- Pessoa Fisica | 2- Pessoa Juridica)" << '\n';
 		std::cin >> opcaoCliente;
 		if (opcaoCliente != 1 && opcaoCliente != 2)
 			std::cout << "Opcao indisponivel." << '\n';
@@ -350,7 +350,7 @@ void Banco::rmv_cliente_f(std::string retirar) {
 
     if (itr != listaClientes_f.end()) {
 		if (buscaCliente_cpf_f(retirar) != -1)
-			std::cout << "não é possivel remover, há contas não finalizadas\n";
+			std::cout << "nao eh possivel remover, ha contas nao finalizadas\n";
 		else
 			listaClientes_f.erase(itr);
     }
@@ -387,7 +387,8 @@ void Banco::rmv_conta(std::string retirar) {
 		}
 		if (itr != listaContas_p.end()) {
 			listaContas_p.erase(itr);
-		}else {
+		}
+		else {
 			std::cout << "conta nao encontrada\n";
 		}
 	}
@@ -411,9 +412,9 @@ void Banco::rmv_conta(std::string retirar) {
 
 std::string Banco::toString() const{
     std::stringstream format;
-    format << "Quantidade de clientes cadastrados no banco: " << PessoaFisica::count_f+PessoaJuridica::count_j <<
-        std::endl << "Pessoas Fisicas: "<< PessoaFisica::count_f<< "\nPessoas Juridicas: " << PessoaJuridica::count_j<<
-		"\nQuantidade de contas cadastradas: " << ContaCorrente::count_chain+ContaPoupanca::count_poup << std::endl<<
+    format << "Quantidade de clientes cadastrados no banco: " << PessoaFisica::count_f + PessoaJuridica::count_j <<
+        std::endl << "Pessoas Fisicas: " << PessoaFisica::count_f << "\nPessoas Juridicas: " << PessoaJuridica::count_j <<
+		"\nQuantidade de contas cadastradas: " << ContaCorrente::count_chain + ContaPoupanca::count_poup << std::endl<<
 		"\nContas Correntes: "<<ContaCorrente::count_chain<<"\nContas Poupancas"<<ContaPoupanca::count_poup<< std::endl;
     return format.str();
 }
@@ -488,6 +489,7 @@ const bool Banco::is_valid_cpf_f(std::string cpf) {
 	}
 	return (cpf.length() == 11 && !repeated) ? true : false;
 }
+
 //auxiliary functions//
 std::string Banco::intToStr(int dia, int mes, int ano) {
     std::stringstream change;
@@ -527,7 +529,7 @@ int Banco::buscaCliente_cpf_j(std::string cpf) {
 		i++;
 	}
 
-    if (itr == listaClientes_j.end() && itr->get_cpf() != cpf) {
+    if (!(itr != listaClientes_j.end())) {
         std::cout << "CPF nao encontrado." << '\n';
         return -1;
     }
@@ -543,7 +545,7 @@ int Banco::buscaCliente_cpf_f(std::string cpf) {
 	for (it = listaClientes_f.begin(); it != listaClientes_f.end() && it->get_cpf().compare(cpf); it++) {
 		j++;
 	}
-	if (it == listaClientes_f.end() && it->get_cpf() != cpf) {
+	if (!(it != listaClientes_f.end())) {
 		std::cout << "CPF nao encontrado." << '\n';
 		return -1;
 	}
