@@ -15,14 +15,15 @@ class Conta
             Conta(const std::string, const std::string, const Data, float);
         ~Conta();
 
-        /* M�todos get */
+        /* Metodos get */
         std::string getNum() const;
         std::string getCPF() const;
         Data getData() const;
         float getSaldo() const;
         void getLancamentos() const; //Extrato da conta;
         void printSaldo() const;
-        std::vector<float> getVector() const;
+        Lancamentos getList() const;
+
         /* Metodo toString */
         std::string toString() const;
 
@@ -34,8 +35,7 @@ class Conta
         static int num_contas;
 
     private:
-       
-		std::vector<float> lancamentos;
+        Lancamentos lancamentos;
         const std::string cpf;
         const std::string num_conta;
         const Data dataAbertura;

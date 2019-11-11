@@ -1,11 +1,12 @@
 #include "Lancamentos.h"
 #include <sstream>
 #include <iomanip>
+#include <iostream>
 
 Lancamentos::Lancamentos()
 {
     //ctor
-    this->listaLancamentos = new float;
+    this->listaLancamentos = new float[1];
     this->numLancamentos = 0;
 }
 
@@ -22,8 +23,7 @@ void Lancamentos::novoLancamento(float valor)
     if (abs(valor) >= 0.01f) {
         this->listaLancamentos[numLancamentos] = valor;
         this->numLancamentos++;
-        this->listaLancamentos = (float*)realloc(listaLancamentos, numLancamentos);
-        this->listaLancamentos[numLancamentos] = 0.0f;
+        this->listaLancamentos = (float*) realloc(listaLancamentos, numLancamentos+1);
     }
 }
 
@@ -37,7 +37,7 @@ std::string Lancamentos::toString() const
 {
     std::ostringstream lancamentosStr;
     lancamentosStr << "Lancamentos da conta:" << "\n";
-    for (int i = 0; i < getNumLancamentos(); i++) {
+    for (int i = 0; i <= getNumLancamentos(); i++) {
         lancamentosStr << std::fixed << std::setprecision(2) << listaLancamentos[i] << "\n";
     }
     return lancamentosStr.str();

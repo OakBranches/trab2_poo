@@ -11,7 +11,7 @@ using namespace std;
 
 int main()
 {
-    int aux, opNum; //atua como opção
+    int aux, opNum; //atua como opï¿½ï¿½o
     string num_conta, cpf;
     Banco banco;
     float valor;

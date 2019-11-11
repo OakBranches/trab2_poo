@@ -9,10 +9,10 @@
 #include "Lancamentos.h"
 #include <list>
 
-/* Contador para n�mero de contas */
+/* Contador para numero de contas */
 int Conta::num_contas = 0;
 
-/* Construtor, inicia lista de lan�amentos,
+/* Construtor, inicia lista de lancamentos,
    inicia parametros,
    incrementa contador;  */
 Conta::Conta(std::string CPF, std::string nconta,
@@ -56,19 +56,16 @@ void Conta::printSaldo() const
               << this->getSaldo() << "\n\n";
 }
 
-std::vector<float> Conta::getVector() const
+Lancamentos Conta::getList() const
 {
     return this->lancamentos;
 }
 
-/* Mostra na tela hist�rico de lan�amentos(extrato) */
+/* Mostra na tela historico de lancamentos(extrato) */
 void Conta::getLancamentos() const
 {
-    std::vector<float>::iterator itr;
-    for (itr =getVector().begin(); itr != getVector().end(); itr++) {
-        std::cout << "Lancamento: " << std::fixed << std::setprecision(2)
-                  << *itr << '\n';
-    }
+
+    std::cout << this->getList().toString() << '\n';
     std::cout << "Saldo final: " << std::fixed
               << std::setprecision(2) << getSaldo();
     std::cout << std::endl;
@@ -93,11 +90,11 @@ void Conta::novoLancamento(float valor, int operacao)
     if (operacao == 2 && this->saldo_atual - valor >= 0) {
         this->saldo_atual -= valor;
         valor *= (-1);
-        this->lancamentos.push_back(valor);
+        this->getList().novoLancamento(valor);
     }
     else if (operacao == 1 && valor > 0) {
         this->saldo_atual += valor;
-        this->lancamentos.push_back(valor);
+        this->getList().novoLancamento(valor);
     }
 
     else std::cout << "Operacao invalida." << '\n';

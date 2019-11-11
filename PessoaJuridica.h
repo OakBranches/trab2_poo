@@ -17,7 +17,7 @@ class PessoaJuridica : public Cliente
 
         // Variavel estatica para tipo pessoa juridica
         static int count_j;
-        
+
     private:
         //variables
         std::string cnpj;
