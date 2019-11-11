@@ -65,12 +65,12 @@ std::vector<float> Conta::getVector() const
 void Conta::getLancamentos() const
 {
     std::vector<float>::iterator itr;
-    for (itr = this->lancamentos.begin(); itr != this->lancamentos.end(); itr++) {
+    for (itr =getVector().begin(); itr != getVector().end(); itr++) {
         std::cout << "Lancamento: " << std::fixed << std::setprecision(2)
                   << *itr << '\n';
     }
     std::cout << "Saldo final: " << std::fixed
-              << std::setprecision(2) << this->getSaldo();
+              << std::setprecision(2) << getSaldo();
     std::cout << std::endl;
 }
 
@@ -108,8 +108,8 @@ void Conta::novoLancamento(float valor, int operacao)
 std::string Conta::toString() const {
     std::stringstream format;
     format << "Apresentando dados da conta..." << std::endl
-        << "Numero da conta: " << this->num_conta << std::endl
-        << "CPF: " << this->cpf << std::endl << "Data de abertura: " << this->dataAbertura.toString()
-        << std::endl << "Saldo atual: " << std::fixed << std::setprecision(2) << this->saldo_atual << std::endl;
+        << "Numero da conta: " << getNum() << std::endl
+        << "CPF: " << getCPF() << std::endl << "Data de abertura: " << getData().toString()
+        << std::endl << "Saldo atual: " << std::fixed << std::setprecision(2) << getSaldo() << std::endl;
     return format.str();
 }

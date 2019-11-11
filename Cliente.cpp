@@ -65,5 +65,12 @@ const std::string Cliente::get_email(){
 	return this->email;
 }
 
-
-
+//To string method
+std::string Cliente::toString() const
+{
+	std::stringstream create;
+	create << "Nome: " << this->nome << std::endl << "CPF: " << this->cpf << std::endl
+		<< "Endereco: " << this->endereco << std::endl << "Telefone: " << this->telefone
+		<< std::endl << "Email: " << this->email << std::endl;
+	return create.str();
+}

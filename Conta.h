@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <vector>
 #include "Data.h"
+#include "Lancamentos.h"
 
 class Conta
 {
@@ -33,8 +34,8 @@ class Conta
         static int num_contas;
 
     private:
-        std::vector<float> lancamentos;
-        
+       
+		std::vector<float> lancamentos;
         const std::string cpf;
         const std::string num_conta;
         const Data dataAbertura;

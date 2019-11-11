@@ -22,7 +22,7 @@ void Lancamentos::novoLancamento(float valor)
     if (abs(valor) >= 0.01f) {
         this->listaLancamentos[numLancamentos] = valor;
         this->numLancamentos++;
-        realloc(listaLancamentos, numLancamentos);
+        this->listaLancamentos = (float*)realloc(listaLancamentos, numLancamentos);
         this->listaLancamentos[numLancamentos] = 0.0f;
     }
 }
