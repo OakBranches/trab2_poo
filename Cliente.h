@@ -22,7 +22,7 @@ public:
 
 	//toString
 	virtual std::string toString() const;
-        
+
 
 	//Static for count number of clients;
 	static int num_clientes;

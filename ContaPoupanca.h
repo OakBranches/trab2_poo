@@ -8,7 +8,7 @@ public:
     /* Construtor e destrutor */
     ContaPoupanca(const std::string, const std::string, const Data, float);
     ~ContaPoupanca();
-    
+
     /* Contador para tipo conta poupanca */
     static int count_poup;
 private:

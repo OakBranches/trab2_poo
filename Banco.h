@@ -36,7 +36,7 @@ class Banco
         void set_cliente_f(std::string);
 		void set_cliente_j(std::string);
 
-        /* MÃ©todo toString */
+        /* Método toString */
         std::string toString() const;
 
         /* getters para listas */
@@ -65,14 +65,14 @@ class Banco
         bool is_valid_numConta_c(std::string);
 		bool is_valid_numConta_p(std::string);
         bool is_valid_data(int, int, int);
-		
+
 
         //validators cliente
         const bool is_valid_email(std::string);
         const bool is_valid_cpf_j(std::string);
 		const bool is_valid_cpf_f(std::string);
         const bool is_valid_cnpj(std::string);
-		
+
 
         //auxiliary functions
         std::string intToStr(int, int, int);
@@ -80,7 +80,7 @@ class Banco
         int buscaCliente_cpf_j(std::string);
 		int buscaCliente_cpf_f(std::string);
 		int buscaCliente_cnpj(std::string); //Busca um cpf de cliente cadastrado;
-        int buscaContaNum_c(std::string); 
+        int buscaContaNum_c(std::string);
 		int buscaContaNum_p(std::string);    //Busca a conta com o numero respectivo;
 };
 

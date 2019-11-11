@@ -35,7 +35,7 @@ Banco::~Banco() {
 	}
 }
 
-/* Métodos */
+/* M�todos */
 
 bool Banco::is_ContaCorrente() {
 	int i;
@@ -66,7 +66,7 @@ bool Banco::is_Juridico() {
 
 void Banco::add_conta_c()
 {
-    //Inicializa variáveis da conta;
+    //Inicializa vari�veis da conta;
     std::string numero_conta, data, cpf;
     int dia, mes, ano;
     float saldo,limite;
@@ -163,7 +163,7 @@ const bool Banco::is_valid_cnpj(std::string cnpj)
 void Banco::add_cliente()
 {
     int opcaoCliente;
-    /* Variáveis para cadastro de cliente */
+    /* Vari�veis para cadastro de cliente */
     std::string cpf, nome, endereco, email, telefone;
 
     std::cout << "Cadastrando cliente..." << std::endl;
@@ -350,7 +350,7 @@ void Banco::rmv_cliente_f(std::string retirar) {
 
     if (itr != listaClientes_f.end()) {
 		if (buscaCliente_cpf_f(retirar) != -1)
-			std::cout << "nÃ£o Ã© possivel remover, hÃ¡ contas nÃ£o finalizadas\n";
+			std::cout << "não é possivel remover, há contas não finalizadas\n";
 		else
 			listaClientes_f.erase(itr);
     }
@@ -464,7 +464,7 @@ const bool Banco::is_valid_email(std::string email){
 const bool Banco::is_valid_cpf_j(std::string cpf){
 	int i, repeated = 0;
 	std::list<PessoaJuridica>::iterator itr;
-	// Procura se hï¿½ algum cpf repetido na lista;
+	// Procura se h� algum cpf repetido na lista;
 	for (i = 0; i < PessoaJuridica::num_clientes && itr != listaClientes_j.end(); i++){
         if(itr->get_cpf() == cpf){
 			repeated = 1;
@@ -478,7 +478,7 @@ const bool Banco::is_valid_cpf_j(std::string cpf){
 const bool Banco::is_valid_cpf_f(std::string cpf) {
 	int i, repeated = 0;
 	std::list<PessoaFisica>::iterator itr;
-	// Procura se hï¿½ algum cpf repetido na lista;
+	// Procura se h� algum cpf repetido na lista;
 	for (i = 0; i < PessoaFisica::num_clientes && itr != listaClientes_f.end(); i++) {
 		if (itr->get_cpf() == cpf) {
 			repeated = 1;
@@ -506,11 +506,11 @@ bool Banco::bissexto (int ano) {
 int Banco::buscaCliente_cnpj(std::string cpf) {
 	std::list<PessoaJuridica>::iterator itr;
 	int i = 0;
-	//procura se o cpf inserido estï¿½ cadastrado
+	//procura se o cpf inserido est� cadastrado
 	for (itr = listaClientes_j.begin(); itr != listaClientes_j.end() && itr->get_cpf().compare(cpf) != 0; itr++) {
 		i++;
 	}
-	
+
 	if (itr == listaClientes_j.end() ) {
 		std::cout << "CNPJ nao encontrado." << '\n';
 		return -1;
@@ -522,12 +522,12 @@ int Banco::buscaCliente_cnpj(std::string cpf) {
 int Banco::buscaCliente_cpf_j(std::string cpf) {
     std::list<PessoaJuridica>::iterator itr;
     int i = 0;
-    //procura se o cpf inserido estï¿½ cadastrado
-	for (itr = listaClientes_j.begin(); itr != listaClientes_j.end() && itr->get_cpf().compare(cpf) != 0; itr++) {
+    //procura se o cpf inserido esta cadastrado
+	for (itr = listaClientes_j.begin(); itr != listaClientes_j.end() && itr->get_cpf().compare(cpf); itr++) {
 		i++;
 	}
-	
-    if (itr == listaClientes_j.end()) {
+
+    if (itr == listaClientes_j.end() && itr->get_cpf() != cpf) {
         std::cout << "CPF nao encontrado." << '\n';
         return -1;
     }
@@ -539,11 +539,11 @@ int Banco::buscaCliente_cpf_f(std::string cpf) {
 
 	std::list<PessoaFisica>::iterator it;
 	int j = 0;
-	//procura se o cpf inserido estï¿½ cadastrado
-	for (it = listaClientes_f.begin(); it != listaClientes_f.end() && it->get_cpf().compare(cpf) != 0; it++) {
+	//procura se o cpf inserido esta cadastrado
+	for (it = listaClientes_f.begin(); it != listaClientes_f.end() && it->get_cpf().compare(cpf); it++) {
 		j++;
 	}
-	if (it == listaClientes_f.end()) {
+	if (it == listaClientes_f.end() && it->get_cpf() != cpf) {
 		std::cout << "CPF nao encontrado." << '\n';
 		return -1;
 	}
@@ -577,8 +577,8 @@ int Banco::buscaContaNum_p(std::string numeroBusca) {
         std::cout << "Conta nao encontrada." << '\n';
 		return -1;
     }
-    //retorna o numero de passos, a partir do inicio, até encontrar a conta
-    //com o numero em questão
+    //retorna o numero de passos, a partir do inicio, at� encontrar a conta
+    //com o numero em quest�o
     return i;
 }
 
