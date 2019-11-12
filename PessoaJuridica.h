@@ -12,6 +12,8 @@ class PessoaJuridica : public Cliente
 
         // Setters
         void setPessoaJuridica(std::string, std::string, std::string, std::string);
+        // Getter
+        std::string getCNPJ() const;
         //toString
         virtual std::string toString() const;
 

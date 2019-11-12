@@ -19,23 +19,23 @@ Banco::Banco() {
 
 Banco::~Banco() {
 
-    /* Libera todas as contas */
-    while (!listaContas_p.empty()) {
-        listaContas_p.pop_back();
-    }
+  /* Libera todas as contas */
+  while (!listaContas_p.empty()) {
+    listaContas_p.pop_back();
+  }
 	while (!listaContas_c.empty()) {
 		listaContas_c.pop_back();
 	}
-    /* Libera todos os clientes */
-    while (!listaClientes_f.empty()) {
-        listaClientes_f.pop_back();
-    }
+  /* Libera todos os clientes */
+  while (!listaClientes_f.empty()) {
+    listaClientes_f.pop_back();
+  }
 	while (!listaClientes_j.empty()) {
 		listaClientes_j.pop_back();
 	}
 }
 
-/* Métodos */
+/* Mï¿½todos */
 
 bool Banco::is_ContaCorrente() {
 	int i;
@@ -66,48 +66,51 @@ bool Banco::is_Juridico() {
 
 void Banco::add_conta_c()
 {
-    //Inicializa variáveis da conta;
-    std::string numero_conta, data, cpf;
-    int dia, mes, ano;
-    float saldo,limite;
+  //Inicializa variaveis da conta;
+  std::string numero_conta, data, cpf;
+  int dia, mes, ano;
+  float saldo,limite;
 	std::string tipo,cnpj;
 	do {
 		std::cout << "Pessoa Juridica ou Pessoa Fisica? (j/f)" << "\n";
 		std::cin >> tipo;
 	} while (tipo[0] != 'j' && tipo[0] != 'f');
 
-    std::cout << "Digite o numero da conta: " << "\n";
-    std::cin >> numero_conta;
+  std::cout << "Digite o numero da conta: " << "\n";
+  std::cin >> numero_conta;
 
-    //Cria uma conta nova(se o numero for valido);
-    if (is_valid_numConta_c(numero_conta)) {
-        do {
-            std::cout << "Digite os dados da conta: " << "\n" << "CPF (ja cadastrado): ";
-            std::cin >> cpf;
-		} while ((buscaCliente_cpf_f(cpf) == -1 && tipo[0] == 'f') || (buscaCliente_cpf_j(cpf) == -1 && tipo[0] == 'j'));
-		if (tipo[0] == 'j') {
-			do {
-				std::cout << "Digite o CNPJ" << "\n" ;
-				std::cin >> cnpj;
-			} while (!is_valid_cnpj(cnpj));
-		}
-        do {
-            std::cout << "Data de abertura, no formato: 'dia mes ano': " << "\n";
-            std::cin >> dia >> mes >> ano;
-        } while (is_valid_data(dia, mes, ano) == false);
-        Data data(dia, mes, ano);
-		std::cout << "Limite do cheque especial:" << "\n";
-		std::cin >> limite;
-        std::cout << "Saldo inicial:" << "\n";
-        std::cin >> saldo;
-		if (tipo[0] == 'j') {
-			listaContas_c.push_back(ContaCorrente(cpf, numero_conta, data, saldo, limite, cnpj, tipo));
-		}
-		else {
-			listaContas_c.push_back(ContaCorrente(cpf, numero_conta, data, saldo, limite, tipo));
-
-		}
+  //Cria uma conta nova(se o numero for valido);
+  if (is_valid_numConta_c(numero_conta)) {
+    if (tipo[0] == 'f'){
+      do {
+          std::cout << "Digite os dados da conta: " << "\n" << "CPF (ja cadastrado): ";
+          std::cin >> cpf;
+	    } while (buscaCliente_cpf_f(cpf) == -1);
     }
+	  if (tipo[0] == 'j') {
+      do {
+        std::cout << "Digite os dados da conta: " << '\n' << "CPF (ja cadastrado): ";
+        std::cin >> cpf;
+      } while(buscaCliente_cpf_j(cpf) == -1);
+      do {
+	      std::cout << "Digite o CNPJ" << "\n" ;
+		    std::cin >> cnpj;
+      } while (!is_valid_cnpj(cnpj));
+	  }
+    do {
+      std::cout << "Data de abertura, no formato: 'dia mes ano': " << "\n";
+      std::cin >> dia >> mes >> ano;
+    } while (is_valid_data(dia, mes, ano) == false);
+    Data data(dia, mes, ano);
+    std::cout << "Limite do cheque especial:" << "\n";
+    std::cin >> limite;
+    std::cout << "Saldo inicial:" << "\n";
+    std::cin >> saldo;
+    if (tipo[0] == 'j') 
+      listaContas_c.push_back(ContaCorrente(cpf, numero_conta, data, saldo, limite, cnpj, tipo));
+    else 
+      listaContas_c.push_back(ContaCorrente(cpf, numero_conta, data, saldo, limite, tipo));
+  }
     else
         std::cout << "Numero ja utilizado. Tente novamente." << "\n";
 }
@@ -163,7 +166,7 @@ const bool Banco::is_valid_cnpj(std::string cnpj)
 void Banco::add_cliente()
 {
     int opcaoCliente;
-    /* Variáveis para cadastro de cliente */
+    /* Variï¿½veis para cadastro de cliente */
     std::string cpf, nome, endereco, email, telefone;
 
     std::cout << "Cadastrando cliente..." << std::endl;
@@ -199,10 +202,10 @@ void Banco::add_cliente()
     std::cin >> telefone;
 	//std::cout << telefone<<std::endl;
     std::cout << "Endereco: ";
-	scanf("\n");
-	std::getline(std::cin, endereco);
-	//std::cout << endereco<<std::endl;
-	if (opcaoCliente == 1)
+    scanf("\n");
+    std::getline(std::cin, endereco);
+    //std::cout << endereco<<std::endl;
+    if (opcaoCliente == 1)
         listaClientes_f.push_back( PessoaFisica(nome, cpf, endereco, telefone, email) );
     else if (opcaoCliente == 2) {
         int dia, mes, ano;
@@ -479,7 +482,7 @@ const bool Banco::is_valid_cpf_j(std::string cpf){
 const bool Banco::is_valid_cpf_f(std::string cpf) {
 	int i, repeated = 0;
 	std::list<PessoaFisica>::iterator itr;
-	// Procura se hï¿½ algum cpf repetido na lista;
+	// Procura se ha algum cpf repetido na lista;
 	for (i = 0; i < PessoaFisica::num_clientes && itr != listaClientes_f.end(); i++) {
 		if (itr->get_cpf() == cpf) {
 			repeated = 1;
@@ -505,31 +508,43 @@ bool Banco::bissexto (int ano) {
     return false;
 }
 
-int Banco::buscaCliente_cnpj(std::string cpf) {
+int Banco::buscaCliente_cnpj(std::string cnpj) {
 	std::list<PessoaJuridica>::iterator itr;
 	int i = 0;
-	//procura se o cpf inserido estï¿½ cadastrado
-	for (itr = listaClientes_j.begin(); itr != listaClientes_j.end() && itr->get_cpf().compare(cpf) != 0; itr++) {
-		i++;
+        int flag = 0;
+	//procura se o cpf inserido esta cadastrado
+	for (itr = listaClientes_j.begin(); itr != listaClientes_j.end() && itr->get_cpf().compare(cnpj) != 0; itr++) {
+            if (itr->getCNPJ() == cnpj) {
+                flag = 1;
+                i++;
+                break;
+            }
+            i++;
 	}
 
-	if (itr == listaClientes_j.end() ) {
+	if (itr == listaClientes_j.end() && flag == 0) {
 		std::cout << "CNPJ nao encontrado." << '\n';
 		return -1;
 	}
 
 	return i;
 }
-/* Busca cpf na lista de clientes e retorna 1 se encontrou */
+/* Busca cpf na lista de clientes e retorna i se encontrou */
 int Banco::buscaCliente_cpf_j(std::string cpf) {
     std::list<PessoaJuridica>::iterator itr;
     int i = 0;
+    int flag = 0;
     //procura se o cpf inserido esta cadastrado
 	for (itr = listaClientes_j.begin(); itr != listaClientes_j.end() && itr->get_cpf().compare(cpf); itr++) {
-		i++;
+            if (itr->get_cpf() == cpf){
+                flag = 1;
+                i++;
+                break;
+            }
+            i++;
 	}
 
-    if (!(itr != listaClientes_j.end())) {
+    if (itr == listaClientes_j.end() && flag == 0) {
         std::cout << "CPF nao encontrado." << '\n';
         return -1;
     }
@@ -538,18 +553,23 @@ int Banco::buscaCliente_cpf_j(std::string cpf) {
 }
 
 int Banco::buscaCliente_cpf_f(std::string cpf) {
-
 	std::list<PessoaFisica>::iterator it;
 	int j = 0;
+        int flag = 0;
 	//procura se o cpf inserido esta cadastrado
 	for (it = listaClientes_f.begin(); it != listaClientes_f.end() && it->get_cpf().compare(cpf); it++) {
-		j++;
+            if (it->get_cpf() == cpf) {
+                flag = 1;
+                j++;
+                break;
+            }
+            j++;
 	}
-	if (!(it != listaClientes_f.end())) {
+        
+	if (it == listaClientes_f.end() && flag == 0) {
 		std::cout << "CPF nao encontrado." << '\n';
 		return -1;
 	}
-
 	return  j;
 }
 
@@ -559,7 +579,7 @@ int Banco::buscaContaNum_c(std::string numeroBusca) {
 	for (it = listaContas_c.begin(); it != listaContas_c.end() && it->getNum().compare(numeroBusca) != 0; it++) {
 		j++;
 	}
-	if ( it == listaContas_c.end()) {
+	if (it == listaContas_c.end()) {
 		std::cout << "Conta nao encontrada." << '\n';
 		return -1;
 	}
@@ -579,8 +599,8 @@ int Banco::buscaContaNum_p(std::string numeroBusca) {
         std::cout << "Conta nao encontrada." << '\n';
 		return -1;
     }
-    //retorna o numero de passos, a partir do inicio, até encontrar a conta
-    //com o numero em questão
+    //retorna o numero de passos, a partir do inicio, ate encontrar a conta
+    //com o numero em questï¿½o
     return i;
 }
 
@@ -642,4 +662,26 @@ void Banco::get_montante()
 		montante += it->getSaldo();
 	}
     std::cout << "Montante do banco: " << std::fixed << std::setprecision(2) << montante << '\n';
+}
+
+/* funcao para alterar limite do cheque especial em tempo de execucao */
+
+void Banco::change_limit(float novo_limite) {
+  std::string numconta;
+  int niterador;
+  float limiteantigo;
+  std::list<ContaCorrente>::iterator itr = listaContas_c.begin();
+  do {
+    std::cout << "Insira o numero da conta corrente: " << "(ja cadastrado)" 
+      << " | se quiser cadastrar uma conta antes, entre com 0 para cancelar a operacao\n"; 
+    std::cin >> numconta;
+  } while (numconta[0] != '0' && (niterador = buscaContaNum_c(numconta)) == -1); 
+  if (numconta[0] != '0') {
+    for (int i = 0; i < niterador; i++) 
+      itr++;
+    limiteantigo = itr->getLimiteCheque();
+    itr->setLimiteCheque(novo_limite);
+    
+    std::cout << "cheque especial alterado de " << limiteantigo << " para " <<      itr->getLimiteCheque() << '\n';
+  }
 }
