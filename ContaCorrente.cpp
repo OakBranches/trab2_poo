@@ -8,14 +8,14 @@ using namespace std;
 /* Inicializacao da variavel estatica */
 int ContaCorrente::count_chain = 0;
 
-/* Construtor para tipo pessoa física */
+/* Construtor para tipo pessoa fÃ­sica */
 ContaCorrente::ContaCorrente(string CPF, string nconta,
                             Data data, float saldo,
                             float limite, string tipo) : Conta(CPF,
                             nconta, data, saldo), tipo_cliente(tipo) {
     setLimiteCheque(limite);
     count_chain++;
-    cout << "Criando conta corrente para pessoa física... " << '\n';
+    cout << "Criando conta corrente para pessoa fÃ­sica... " << '\n';
 }
 
 /* Construtor para tipo pessoa juridica */
@@ -26,7 +26,7 @@ ContaCorrente::ContaCorrente(string CPF, string nconta,
                             tipo_cliente(tipo), cnpj(CNPJ) {
     setLimiteCheque(limite);
     count_chain++;
-    cout << "Criando conta corrente para pessoa jurídica... " << '\n';
+    cout << "Criando conta corrente para pessoa jurÃ­dica... " << '\n';
 }
 
 /* Destrutor */

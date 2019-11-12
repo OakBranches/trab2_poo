@@ -56,6 +56,10 @@ void PessoaJuridica::set_contrato(std::string contrato)
     this->data_contrato = contrato;
 }
 
+std::string PessoaJuridica::getCNPJ() const {
+    return this->cnpj;
+}
+
 std::string PessoaJuridica::toString() const {
     std::ostringstream change;
     change << Cliente::toString() << "CNPJ: " << this->cnpj << std::endl << "Ramo de atuacao: "

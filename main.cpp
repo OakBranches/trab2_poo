@@ -6,6 +6,10 @@
 #include "Conta.h"
 #include "Cliente.h"
 #include "Banco.h"
+#include "ContaCorrente.h"
+#include "ContaPoupanca.h"
+#include "PessoaFisica.h"
+#include "PessoaJuridica.h"
 
 using namespace std;
 
@@ -14,7 +18,7 @@ int main()
     int aux, opNum; //atua como op��o
     string num_conta, cpf;
     Banco banco;
-    float valor;
+    float valor, novolimite;
 
     do {
         cout << "O que deseja fazer?" << '\n'
@@ -26,9 +30,15 @@ int main()
              << " 6- Remover uma conta" << '\n'
              << " 7- Fazer um lancamento" << '\n'
              << " 8- Ver os lancamentos de uma conta" << '\n'
-             << " 9- Ver todas as contas" << '\n'
-             << "10- Ver total de clientes e de contas" << '\n'
-             << "11- Ver montante total do banco" << '\n'
+             << " 9- Alterar limite do cheque especial de uma conta corrente" << '\n'
+             << "10- Ver todas as contas" << '\n'
+             << "11- Ver total de contas" << '\n' 
+             << "12- Ver total de contas corrente" << '\n'
+             << "13- Ver total de contas poupanca" << '\n'
+             << "14- Ver total de pessoas fisicas " << '\n'
+             << "15- Ver total de pessoas juridicas " << '\n'   
+             << "16- Ver total de clientes e de contas" << '\n'    
+             << "17- Ver montante total do banco" << '\n'
              << " 0- Sair" << '\n';
         cin >> opNum;
         cout << '\n';
@@ -94,15 +104,44 @@ int main()
                 break;
             }
             case (9): {
+              cout << "Digite o novo valor para cheque especial:\n";
+              cin >> novolimite;
+              banco.change_limit(novolimite);
+              cout << '\n';
+              break;
+            }
+            case (10): {
                 banco.get_contas();
                 cout << '\n';
                 break;
             }
-            case (10): {
+            case (11): {
+                cout << "Total de contas = " << Conta::num_contas << '\n';
+                break;
+            }
+            case (12): {
+                cout << "Total de contas corrente = " << ContaCorrente::count_chain 
+                        << '\n';
+                break;
+            }
+            case (13): {
+                cout << "Total de contas poupanca = " << ContaPoupanca::count_poup
+                        << '\n';
+                break;
+            }
+            case (14): {
+                cout << "Total de pessoas fisicas = " << PessoaFisica::count_f << '\n';
+                break;
+            }
+            case (15): {
+                cout << "Total de pessoas juridicas = " << PessoaJuridica::count_j << '\n';
+                break;
+            }
+            case (16): {
                 cout << banco.toString() << '\n';
                 break;
             }
-            case (11): {
+            case (17): {
                 banco.get_montante();
                 cout << '\n';
                 break;
