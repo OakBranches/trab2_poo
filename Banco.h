@@ -57,10 +57,10 @@ class Banco
 		  void novoLancamento_p(std::string, float, int);
     private:
       /* Lista de clientes e contas, composicao de objetos */
-      std::list<ContaCorrente> listaContas_c;
-		  std::list<ContaPoupanca> listaContas_p;
-      std::list<PessoaJuridica> listaClientes_j;
-		  std::list<PessoaFisica> listaClientes_f;
+      std::list<ContaCorrente*> listaContas_c;
+		  std::list<ContaPoupanca*> listaContas_p;
+      std::list<PessoaJuridica*> listaClientes_j;
+		  std::list<PessoaFisica*> listaClientes_f;
 
 
       //validators conta

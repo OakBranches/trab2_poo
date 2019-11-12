@@ -28,8 +28,9 @@ class Conta
         std::string toString() const;
 
         /* Metodos set */
-        void updateSaldo(float, int);
-        void novoLancamento(float, int);
+		void setSaldo(float);
+
+        virtual void novoLancamento(float, int);
 
         /* Contador para numero de contas */
         static int num_contas;

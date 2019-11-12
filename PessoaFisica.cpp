@@ -10,9 +10,10 @@ PessoaFisica::PessoaFisica(std::string nome, std::string cpf,
     std::string endereco, std::string telefone, std::string email)
     : Cliente(nome, cpf, endereco, telefone, email)
 {
+	PessoaFisica::count_f++;
     //ctor
-    std::cout << "Cliente do tipo 'Pessoa Fisica' cadastrado." << '\n';
-    count_f++;
+    std::cout <<PessoaFisica::count_f<<"o Cliente do tipo 'Pessoa Fisica' cadastrado." << '\n';
+    
 }
 
 PessoaFisica::~PessoaFisica()

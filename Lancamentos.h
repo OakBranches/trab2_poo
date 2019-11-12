@@ -18,8 +18,8 @@ class Lancamentos
     protected:
 
     private:
-        float* listaLancamentos;
-        int numLancamentos;
+        static float* listaLancamentos;
+        static int numLancamentos;
 };
 
 #endif // LANCAMENTOS_H

@@ -71,17 +71,12 @@ void Conta::getLancamentos() const
     std::cout << std::endl;
 }
 
-/* M�todos set */
-void Conta::updateSaldo(float valor, int operacao)
+void Conta::setSaldo(float i )
 {
-    //operacao = 1: credito, operacao = 2: debito.
-    if (operacao == 2 && this->saldo_atual - valor >= 0) {
-        novoLancamento(valor, operacao);
-        this->saldo_atual = this->saldo_atual - valor;
-    }
-    else if (operacao == 1)
-        this->saldo_atual = this->saldo_atual + valor;
+	this->saldo_atual =  i;
 }
+
+
 
 /* Atualiza a lista de lancamentos */
 void Conta::novoLancamento(float valor, int operacao)
@@ -90,14 +85,16 @@ void Conta::novoLancamento(float valor, int operacao)
     if (operacao == 2 && this->saldo_atual - valor >= 0) {
         this->saldo_atual -= valor;
         valor *= (-1);
+		std::cout << "tesgee: " << valor;
         this->getList().novoLancamento(valor);
     }
     else if (operacao == 1 && valor > 0) {
         this->saldo_atual += valor;
+		std::cout << "tesaaee: " << valor;
         this->getList().novoLancamento(valor);
     }
-
-    else std::cout << "Operacao invalida." << '\n';
+	else std::cout << "Operacao invalida." << '\n';
+	std::cout << "saldo atual :" << getSaldo() << std::endl;
 }
 
 /* toString */

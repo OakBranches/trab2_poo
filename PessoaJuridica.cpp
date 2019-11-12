@@ -18,6 +18,7 @@ PessoaJuridica::PessoaJuridica(std::string nome, std::string cpf,
     this->setPessoaJuridica(cnpj, ramo, data_fundacao, data_contrato);
     std::cout << "Cliente do tipo 'Pessoa Juridica' cadastrado." << '\n';
     count_j++;
+	std::cout << count_j<<std::endl;
 }
 
 PessoaJuridica::~PessoaJuridica()
