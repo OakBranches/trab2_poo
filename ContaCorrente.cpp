@@ -15,7 +15,7 @@ ContaCorrente::ContaCorrente(string CPF, string nconta,
                             nconta, data, saldo), tipo_cliente(tipo) {
     setLimiteCheque(limite);
     count_chain++;
-    cout << "Criando conta corrente para pessoa física... " << '\n';
+    cout << "Criando conta corrente para pessoa fisica... " << '\n';
 }
 
 /* Construtor para tipo pessoa juridica */
@@ -26,7 +26,7 @@ ContaCorrente::ContaCorrente(string CPF, string nconta,
                             tipo_cliente(tipo), cnpj(CNPJ) {
     setLimiteCheque(limite);
     count_chain++;
-    cout << "Criando conta corrente para pessoa jurídica... " << '\n';
+    cout << "Criando conta corrente para pessoa juridica... " << '\n';
 }
 
 /* Destrutor */

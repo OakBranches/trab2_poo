@@ -20,17 +20,30 @@ Banco::~Banco() {
 
   /* Libera todas as contas */
   while (!listaContas_p.empty()) {
-    listaContas_p.pop_back();
+	  std::list<ContaPoupanca*>::iterator atr;
+	  for (atr = listaContas_p.begin(); atr != listaContas_p.end(); atr++) {
+		  delete[] * atr;
+		  listaContas_p.erase(atr);
+	  }
   }
 	while (!listaContas_c.empty()) {
-		listaContas_c.pop_back();
+		std::list<ContaCorrente*>::iterator tr;
+		for (tr = listaContas_c.begin(); tr != listaContas_c.end(); tr++) {
+			delete[] * tr;
+			listaContas_c.erase(tr);
+		}
 	}
   /* Libera todos os clientes */
   while (!listaClientes_f.empty()) {
-    listaClientes_f.pop_back();
+	 std::list<PessoaFisica*>::iterator itr;
+	 for (itr = listaClientes_f.begin(); itr != listaClientes_f.end(); itr++)
+		 rmv_cliente_f((*itr)->get_cpf());
+
   }
 	while (!listaClientes_j.empty()) {
-		listaClientes_j.pop_back();
+		std::list<PessoaJuridica*>::iterator it;
+		for (it = listaClientes_j.begin(); it != listaClientes_j.end(); it++)
+			rmv_cliente_j((*it)->get_cpf());
 	}
 }
 
@@ -365,8 +378,10 @@ void Banco::rmv_cliente_f(std::string retirar) {
     if (itr != listaClientes_f.end()) {
 		if (buscaCliente_cpf_f(retirar) != -1)
 			std::cout << "nao eh possivel remover, ha contas nao finalizadas\n";
-		else
+		else {
+			delete[] *itr;
 			listaClientes_f.erase(itr);
+		}
     }
 }
 
@@ -381,8 +396,10 @@ void Banco::rmv_cliente_j(std::string retirar) {
 	if (itr != listaClientes_j.end()) {
 		if (buscaCliente_cpf_j(retirar) != -1)
 			std::cout << "nao eh possivel remover, ha contas nao finalizadas\n";
-		else
+		else {
+			delete[] * itr;
 			listaClientes_j.erase(itr);
+		}
 	}
 }
 
@@ -400,6 +417,7 @@ void Banco::rmv_conta(std::string retirar) {
 			;
 		}
 		if (itr != listaContas_p.end()) {
+			delete[] * itr;
 			listaContas_p.erase(itr);
 		}
 		else {
@@ -414,6 +432,7 @@ void Banco::rmv_conta(std::string retirar) {
 			;
 		}
 		if (it != listaContas_c.end()) {
+			delete[] * it;
 			listaContas_c.erase(it);
 		}else {
 			std::cout << "conta nao encontrada\n";
@@ -429,7 +448,7 @@ std::string Banco::toString() const{
     format << "Quantidade de clientes cadastrados no banco: " << PessoaFisica::count_f + PessoaJuridica::count_j <<
         std::endl << "Pessoas Fisicas: " << PessoaFisica::count_f << "\nPessoas Juridicas: " << PessoaJuridica::count_j <<
 		"\nQuantidade de contas cadastradas: " << ContaCorrente::count_chain + ContaPoupanca::count_poup << std::endl<<
-		"\nContas Correntes: "<<ContaCorrente::count_chain<<"\nContas Poupancas"<<ContaPoupanca::count_poup<< std::endl;
+		"\nContas Correntes: "<<ContaCorrente::count_chain<<"\nContas Poupancas: "<<ContaPoupanca::count_poup<< std::endl;
     return format.str();
 }
 

@@ -12,7 +12,7 @@ PessoaFisica::PessoaFisica(std::string nome, std::string cpf,
 {
 	PessoaFisica::count_f++;
     //ctor
-    std::cout <<PessoaFisica::count_f<<"o Cliente do tipo 'Pessoa Fisica' cadastrado." << '\n';
+    std::cout <<"Cliente do tipo 'Pessoa Fisica' cadastrado." << '\n';
     
 }
 

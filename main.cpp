@@ -15,7 +15,7 @@ using namespace std;
 
 int main()
 {
-    int aux, opNum; //atua como op��o
+    int aux, opNum; //atua como opcao
     string num_conta, cpf;
     Banco banco;
     float valor, novolimite;
@@ -152,5 +152,6 @@ int main()
                 cout << "Opcao nao disponivel. Tente novamente." << "\n\n";
         }
     } while (opNum);
+	banco.~Banco();
     return 0;
 }
