@@ -14,8 +14,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-Banco::Banco() {
-}
+Banco::Banco() {}
 
 Banco::~Banco() {
 
@@ -227,16 +226,19 @@ void Banco::add_cliente()
         } while (!is_valid_cnpj(cnpj));
 
         std::cout << "Ramo de atuacao: ";
+        scanf("\n");
         std::getline(std::cin, ramo);
         do {
             std::cout << "Data de fundacao, no formato: 'dia mes ano': ";
             std::cin >> dia >> mes >> ano;
+            scanf("\n");
         } while (is_valid_data(dia, mes, ano) == false);
         fundacao = intToStr(dia, mes, ano);
 
         do {
             std::cout << "Data da ultima atualizacao do contrato social, no formato: 'dia mes ano': ";
             std::cin >> dia >> mes >> ano;
+            scanf("\n");
         } while (is_valid_data(dia, mes, ano) == false);
         contrato = intToStr(dia, mes, ano);
 
@@ -476,28 +478,29 @@ const bool Banco::is_valid_email(std::string email){
 
 const bool Banco::is_valid_cpf_j(std::string cpf){
 	int i, repeated = 0;
-	std::list<PessoaJuridica*>::iterator itr;
+	std::list<PessoaJuridica*>::iterator itr = listaClientes_j.begin();
 	// Procura se ha algum cpf repetido na lista;
-	for (i = 0; i < PessoaJuridica::count_j && itr != listaClientes_j.end(); i++){
-        if((*itr)->get_cpf() == cpf){
-			repeated = 1;
-			break;
-		}
-		itr++;
+	for (i = 0; i < PessoaJuridica::count_j; i++){
+      if ((*itr)->get_cpf() == cpf){
+			  repeated = 1;
+			  break;
+		  } else if (itr != listaClientes_j.end()) {
+        itr++;
+      } 
 	}
 	return (cpf.length() == 11 && !repeated) ? true : false;
 }
 
 const bool Banco::is_valid_cpf_f(std::string cpf) {
 	int i, repeated = 0;
-	std::list<PessoaFisica*>::iterator itr;
+	std::list<PessoaFisica*>::iterator itr = listaClientes_f.begin();
 	// Procura se ha algum cpf repetido na lista;
-	for (i = 0; i < PessoaFisica::count_f && itr != listaClientes_f.end(); i++) {
-		if ((*itr)->get_cpf().compare(cpf)) {
+	for (i = 0; i < PessoaFisica::count_f; i++) {
+		if ( (*itr)->get_cpf() == cpf) {
 			repeated = 1;
 			break;
 		}
-		itr++;
+    itr++;
 	}
 	return (cpf.length() == 11 && !repeated) ? true : false;
 }
@@ -562,9 +565,9 @@ int Banco::buscaCliente_cpf_j(std::string cpf) {
 }
 
 int Banco::buscaCliente_cpf_f(std::string cpf) {
-	std::list<PessoaFisica*>::iterator it;
+	std::list<PessoaFisica*>::iterator it = listaClientes_f.begin();
 	int j = 0;
-        int flag = 0;
+  int flag = 0;
 	//procura se o cpf inserido esta cadastrado
 	for (it = listaClientes_f.begin(); it != listaClientes_f.end() && (*it)->get_cpf().compare(cpf); it++) {
             if ((*it)->get_cpf() == cpf) {

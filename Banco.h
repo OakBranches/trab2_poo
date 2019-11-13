@@ -80,7 +80,7 @@ class Banco
       bool bissexto(int);
       int buscaCliente_cpf_j(std::string);
 		  int buscaCliente_cpf_f(std::string);
-		  int buscaCliente_cnpj(std::string); //Busca um cpf de cliente cadastrado;
+		  int buscaCliente_cnpj(std::string); //Busca um cnpj de cliente cadastrado;
       int buscaContaNum_c(std::string);
 		  int buscaContaNum_p(std::string);    //Busca a conta com o numero respectivo;
 };
