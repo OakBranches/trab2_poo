@@ -21,6 +21,7 @@ int main()
     float valor, novolimite;
 
     do {
+		
         cout << "O que deseja fazer?" << '\n'
              << " 1- Adicionar um cliente" << '\n'
              << " 2- Alterar os dados de um cliente" << '\n'
@@ -150,6 +151,8 @@ int main()
                 break;
             default:
                 cout << "Opcao nao disponivel. Tente novamente." << "\n\n";
+
+				
         }
     } while (opNum);
 	banco.~Banco();

@@ -175,8 +175,8 @@ void Banco::add_conta_p()
 		ContaPoupanca* a = new ContaPoupanca(cpf, numero_conta, datac, saldo);
 		listaContas_p = (ContaPoupanca**)realloc(listaContas_p, sizeof(ContaPoupanca*) * (ContaPoupanca::count_poup ));
 		listaContas_p[ContaPoupanca::count_poup-1] = a;
-		std::cout << "NUMEROS DE CONTAAAAAASSSSSSS" << b << std::endl;
-	}
+		
+		}
 	else
 		std::cout << "Numero ja utilizado. Tente novamente." << "\n";
 }
@@ -288,11 +288,11 @@ void Banco::get_clientes()
 {
 	std::cout << "\n\nPESSOAS FISICAS\n\n";
     int itr;
-    for (itr = 0; listaClientes_f[itr] != listaClientes_f[PessoaFisica::count_f-1]; itr++)
+    for (itr = 0; listaClientes_f[itr-1] != listaClientes_f[PessoaFisica::count_f-1]; itr++)
         std::cout << (listaClientes_f[itr])->toString() << "\n";
 	std::cout << "\n\nPESSOAS JURIDICAS\n\n";
 	int it;
-	for (it = 0; listaClientes_j[it] != listaClientes_j[PessoaJuridica::count_j-1]; it++)
+	for (it = 0; listaClientes_j[it-1] != listaClientes_j[PessoaJuridica::count_j-1]; it++)
 		std::cout <<listaClientes_j[it]->toString() << "\n";
 }
 
@@ -359,12 +359,11 @@ void Banco::get_contas()
 {
     int itr;
 	std::cout << "\n\nCONTAS CORRENTES\n\n";
-    for(itr = 0; listaContas_c[itr] != listaContas_c[ContaCorrente::count_chain-1]; itr++)
+    for(itr = 0; listaContas_c[itr-1] != listaContas_c[ContaCorrente::count_chain-1]; itr++)
         std::cout << (listaContas_c[itr])->toString() << "\n";
 	std::cout << "\n\nCONTAS POUPANCAS\n\n";
-	for (itr = 0; itr <= ContaPoupanca::count_poup - 1; itr++) {
-		(listaContas_p[itr])->toString();
-		std::cout << "\n\nCONTAS POUPANCA -" << itr << std::endl;
+	for (itr = 0; listaContas_c[itr-1] != listaContas_c[ContaPoupanca::count_poup - 1]; itr++) {
+		std::cout<<listaContas_p[itr]->toString() << std::endl;
 	}
 	
 }
