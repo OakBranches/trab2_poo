@@ -607,7 +607,7 @@ int Banco::buscaContaNum_c(std::string numeroBusca) {
 	int  j = 0;
 	int flag = 0;
 	for (it = listaContas_c.begin(); it != listaContas_c.end() && (*it)->getNum().compare(numeroBusca) != 0; it++) {
-		if ((*it)->getNum().compare(numeroBusca)) {
+		if ((*it)->getNum().compare(numeroBusca)==0) {
 			flag = 1;
 			j++;
 			break;
@@ -628,7 +628,7 @@ int Banco::buscaContaNum_p(std::string numeroBusca) {
     int i = 0;
 	int flag = 0;
     for (itr = listaContas_p.begin(); itr != listaContas_p.end() && (*itr)->getNum().compare(numeroBusca) != 0; itr++) {
-		if ((*itr)->getNum().compare(numeroBusca)) {
+		if ((*itr)->getNum().compare(numeroBusca)==0) {
 			i++;
 			flag = 1;
 			break;
@@ -651,6 +651,7 @@ void Banco::novoLancamento_c(std::string numeroBusca, float valor, int operacao)
     for (int i = 0; i < aux; i++) {
         itr++;
     }
+	std::cout << "conta ->>>>>>>>>>>>>>>>>>>" << (*itr)->getNum() << std::endl;
     if (aux != -1) {
         (*itr)->novoLancamento(valor, operacao);
     }

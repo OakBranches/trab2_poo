@@ -2,13 +2,14 @@
 #include <sstream>
 #include <iomanip>
 #include <iostream>
-
+#include<algorithm>
 
 
 Lancamentos::Lancamentos()
 {
+	destroid = 0;
 	numLancamentos = new int[1];
-	*numLancamentos = 0;
+	numLancamentos[0] = 0;
 	//ctor
 	listaLancamentos = new float*[1];
 	listaLancamentos[0] = new float[1];
@@ -18,9 +19,11 @@ Lancamentos::Lancamentos()
 Lancamentos::~Lancamentos()
 {
     //dtor
-	delete[] listaLancamentos[0];
-	delete[] listaLancamentos;
-	delete numLancamentos;
+	if (destroid) {
+		free(listaLancamentos[0]);
+		free(listaLancamentos);
+		free(numLancamentos);
+	}
 }
 
 void Lancamentos::novoLancamento(float valor)
@@ -28,12 +31,14 @@ void Lancamentos::novoLancamento(float valor)
     //se o valor for valido, ie, maior ou igual a um centavo,
     //guarda o valor atual e aloca uma posicao nova na memoria
     //para o lancamento seguinte e guarda o valor 0 para controle
-    (*numLancamentos)++;
-    float* vet = new float[*numLancamentos];
-    std::copy(this->listaLancamentos[0],this->listaLancamentos[0] + (*numLancamentos - 1), vet);
-    delete[] this->listaLancamentos[0];
+    numLancamentos[0]+=1;
+    float* vet = new float[numLancamentos[0]];
+	for (int i = 0; i < numLancamentos[0]; i++) {
+		vet[i] = listaLancamentos[0][i];
+	}
+	delete[] this->listaLancamentos[0];
     this->listaLancamentos[0] = vet;
-    this->listaLancamentos[0][*numLancamentos-1] = valor;
+    this->listaLancamentos[0][numLancamentos[0]-1] = valor;
 
 }
 

@@ -80,7 +80,7 @@ void ContaCorrente::novoLancamento(float valor, int operacao)
 	}
 	else if (operacao == 1 && valor > 0){
 		setSaldo(getSaldo() + valor);
-		//this->getList().novoLancamento(valor);
+		this->getList().novoLancamento(valor);
 	}
 	else std::cout << "Operacao invalida." << '\n';
 	std::cout << "saldo atual :" << getSaldo() << std::endl;

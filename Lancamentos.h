@@ -20,6 +20,7 @@ class Lancamentos
     private:
         float** listaLancamentos;
         int* numLancamentos;
+		int destroid;
 };
 
 #endif // LANCAMENTOS_H
