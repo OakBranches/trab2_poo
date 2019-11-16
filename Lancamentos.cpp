@@ -30,7 +30,7 @@ void Lancamentos::novoLancamento(float valor)
 {
     //se o valor for valido, ie, maior ou igual a um centavo,
     //guarda o valor atual e aloca uma posicao nova na memoria
-    //para o lancamento seguinte e guarda o valor 0 para controle
+    //para o lancamento seguinte
     numLancamentos[0]+=1;
     float* vet = new float[numLancamentos[0]];
 	for (int i = 0; i < numLancamentos[0]; i++) {
