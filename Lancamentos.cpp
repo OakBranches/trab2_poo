@@ -20,10 +20,11 @@ Lancamentos::~Lancamentos()
 {
     //dtor
 	if (destroid) {
-		free(listaLancamentos[0]);
-		free(listaLancamentos);
-		free(numLancamentos);
+		delete[](listaLancamentos[0]);
+		delete[](listaLancamentos);
+		delete[](numLancamentos);
 	}
+	
 }
 
 void Lancamentos::novoLancamento(float valor)
@@ -44,7 +45,7 @@ void Lancamentos::novoLancamento(float valor)
 
 int Lancamentos::getNumLancamentos() const
 {
-    return *this->numLancamentos;
+    return *(this->numLancamentos);
 }
 
 //toString()

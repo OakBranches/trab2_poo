@@ -25,7 +25,7 @@ class Conta
         Lancamentos getList() const;
 
         /* Metodo toString */
-        std::string toString() const;
+         std::string toString() const;
 
         /* Metodos set */
 		void setSaldo(float);
