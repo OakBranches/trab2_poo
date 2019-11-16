@@ -28,16 +28,13 @@ void Lancamentos::novoLancamento(float valor)
     //se o valor for valido, ie, maior ou igual a um centavo,
     //guarda o valor atual e aloca uma posicao nova na memoria
     //para o lancamento seguinte e guarda o valor 0 para controle
-    if (abs(valor) >= 0.01f) {
+    (*numLancamentos)++;
+    float* vet = new float[*numLancamentos];
+    std::copy(this->listaLancamentos[0],this->listaLancamentos[0] + (*numLancamentos - 1), vet);
+    delete[] this->listaLancamentos[0];
+    this->listaLancamentos[0] = vet;
+    this->listaLancamentos[0][*numLancamentos-1] = valor;
 
-		(*numLancamentos)++;
-		float* vet = new float[*numLancamentos];
-		std::copy_n(this->listaLancamentos[0], *numLancamentos-1, vet);
-		delete[] this->listaLancamentos[0];
-		this->listaLancamentos[0] = vet;
-		this->listaLancamentos[0][*numLancamentos-1] = valor;    
-
-    }
 }
 
 int Lancamentos::getNumLancamentos() const

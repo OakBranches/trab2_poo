@@ -85,12 +85,10 @@ void Conta::novoLancamento(float valor, int operacao)
     if (operacao == 2 && this->saldo_atual - valor >= 0) {
         this->saldo_atual -= valor;
         valor *= (-1);
-		std::cout << "tesgee: " << valor;
         this->getList().novoLancamento(valor);
     }
     else if (operacao == 1 && valor > 0) {
         this->saldo_atual += valor;
-		std::cout << "tesaaee: " << valor;
         this->getList().novoLancamento(valor);
     }
 	else std::cout << "Operacao invalida." << '\n';

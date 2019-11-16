@@ -73,14 +73,14 @@ string ContaCorrente::toString() const {
 void ContaCorrente::novoLancamento(float valor, int operacao)
 {
 	//operacao = 1: credito, operacao = 2: debito
-	if (operacao == 2 && getSaldo() - valor >= getLimiteCheque()&&valor>=0) {
+	if (operacao == 2 && getSaldo() - valor >= getLimiteCheque() && valor >= 0) {
 		setSaldo(getSaldo() - valor);
 		valor *= (-1);
 		this->getList().novoLancamento(valor);
 	}
 	else if (operacao == 1 && valor > 0){
 		setSaldo(getSaldo() + valor);
-		this->getList().novoLancamento(valor);
+		//this->getList().novoLancamento(valor);
 	}
 	else std::cout << "Operacao invalida." << '\n';
 	std::cout << "saldo atual :" << getSaldo() << std::endl;

@@ -118,9 +118,9 @@ void Banco::add_conta_c()
     std::cin >> limite;
     std::cout << "Saldo inicial:" << "\n";
     std::cin >> saldo;
-    if (tipo[0] == 'j') 
+    if (tipo[0] == 'j')
       listaContas_c.push_back(new ContaCorrente(cpf, numero_conta, data, saldo, limite, cnpj, tipo));
-    else 
+    else
       listaContas_c.push_back(new ContaCorrente(cpf, numero_conta, data, saldo, limite, tipo));
   }
     else
@@ -244,14 +244,12 @@ void Banco::add_cliente()
         do {
             std::cout << "Data de fundacao, no formato: 'dia mes ano': ";
             std::cin >> dia >> mes >> ano;
-            scanf("\n");
         } while (is_valid_data(dia, mes, ano) == false);
         fundacao = intToStr(dia, mes, ano);
 
         do {
             std::cout << "Data da ultima atualizacao do contrato social, no formato: 'dia mes ano': ";
             std::cin >> dia >> mes >> ano;
-            scanf("\n");
         } while (is_valid_data(dia, mes, ano) == false);
         contrato = intToStr(dia, mes, ano);
 
@@ -505,7 +503,7 @@ const bool Banco::is_valid_cpf_j(std::string cpf){
 			  break;
 		  } else if (itr != listaClientes_j.end()) {
         itr++;
-      } 
+      }
 	}
 	return (cpf.length() == 11 && !repeated) ? true : false;
 }
@@ -596,7 +594,7 @@ int Banco::buscaCliente_cpf_f(std::string cpf) {
             }
             j++;
 	}
-        
+
 	if (it == listaClientes_f.end() && flag == 0) {
 		std::cout << "CPF nao encontrado." << '\n';
 		return -1;
@@ -713,17 +711,17 @@ void Banco::change_limit(float novo_limite) {
   std::list<ContaCorrente*>::iterator itr = listaContas_c.begin();
 
   do {
-    std::cout << "Insira o numero da conta corrente: " << "(ja cadastrado)\n" 
-      << "Se quiser cadastrar uma conta antes, entre com 0 para cancelar a operacao\n"; 
+    std::cout << "Insira o numero da conta corrente: " << "(ja cadastrado)\n"
+      << "Se quiser cadastrar uma conta antes, entre com 0 para cancelar a operacao\n";
     std::cin >> numconta;
-  } while (numconta[0] != '0' && (buscaContaNum_c(numconta)) == -1); 
+  } while (numconta[0] != '0' && (buscaContaNum_c(numconta)) == -1);
   niterador = buscaContaNum_c(numconta);
   if (numconta[0] != '0') {
-    for (int i = 0; i < niterador; i++) 
+    for (int i = 0; i < niterador; i++)
       itr++;
     limiteantigo = (*itr)->getLimiteCheque();
     (*itr)->setLimiteCheque(novo_limite);
-    
+
     std::cout << "cheque especial alterado de " << limiteantigo << " para " <<      (*itr)->getLimiteCheque() << '\n';
   }
 }
