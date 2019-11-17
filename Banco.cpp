@@ -88,11 +88,11 @@ void Banco::add_conta_c()
   std::string numero_conta, data, cpf;
   int dia, mes, ano;
   float saldo,limite;
-	std::string tipo,cnpj;
-	do {
-		std::cout << "Pessoa Juridica ou Pessoa Fisica? (j/f)" << "\n";
-		std::cin >> tipo;
-	} while (tipo[0] != 'j' && tipo[0] != 'f');
+  std::string tipo,cnpj;
+  do {
+    std::cout << "Pessoa Juridica ou Pessoa Fisica? (j/f)" << "\n";
+    std::cin >> tipo;
+  } while (tipo[0] != 'j' && tipo[0] != 'f');
 
   std::cout << "Digite o numero da conta: " << "\n";
   std::cin >> numero_conta;
@@ -105,12 +105,12 @@ void Banco::add_conta_c()
             std::cin >> cpf;
         } while (buscaCliente_cpf_f(cpf) == -1 && cpf.compare("0") != 0);
     }
-
+    if (cpf == "0") return;
     if (tipo[0] == 'j') {
     do {
         std::cout << "Digite os dados da conta: " << '\n' << "CPF (ja cadastrado), ou '0' (zero) para cancelar: ";
         std::cin >> cpf;
-    } while(buscaCliente_cpf_j(cpf) == -1 || cpf.compare("0") != 0);
+    } while(buscaCliente_cpf_j(cpf) == -1 && cpf.compare("0") != 0);
     if (cpf.compare("0") == 0) return;
     do {
         std::cout << "Digite o CNPJ" << "\n" ;
@@ -132,7 +132,7 @@ void Banco::add_conta_c()
 		novalista = new ContaCorrente(cpf, numero_conta, data, saldo, limite, cnpj, tipo);
 	}
 	else {
-		 novalista = new ContaCorrente(cpf, numero_conta, data, saldo, limite, tipo);
+        novalista = new ContaCorrente(cpf, numero_conta, data, saldo, limite, tipo);
 	}
 	listaContas_c[ContaCorrente::count_chain - 1] = (novalista);
   }
@@ -206,21 +206,24 @@ void Banco::add_cliente()
 
     std::cout << "Cadastrando cliente..." << std::endl << "Insira dados:" << '\n';
     if (opcaoCliente == 1) std::cout << "CPF: ";
-    else if (opcaoCliente == 2) std::cout << "CPF do socio majoritario: ";
+    else if (opcaoCliente == 2) std::cout << "CPF do proprietario(ja cadastrado): ";
 	if (opcaoCliente == 1) {
 		do {
-			std::cin >> cpf;
+            std::cin >> cpf;
 			if (!is_valid_cpf_f(cpf))
-				std::cout << "CPF invalido ou ja utilizado. Tente novamente." << '\n';
-		} while (!is_valid_cpf_f(cpf));
+				std::cout << "CPF invalido ou ja utilizado. Tente novamente." << '\n' << "Caso queira cancelar a operacao insira 0\n";
+		} while (cpf != "0" && !is_valid_cpf_f(cpf));
 	}
 	else if (opcaoCliente == 2) {
 		do {
-			std::cin >> cpf;
-			if (!is_valid_cpf_j(cpf))
-				std::cout << "CPF invalido ou ja utilizado. Tente novamente." << '\n';
-		} while (!is_valid_cpf_j(cpf));
+            std::cin >> cpf;
+			if (cpf != "0" && (!is_valid_cpf_j(cpf) || buscaCliente_cpf_f(cpf) == -1)) {
+                std::cout << "CPF invalido ou nao cadastrado. Tente novamente." << '\n';
+                std::cout << "Caso queira cancelar a operacao insira 0\n";
+			}
+		} while (cpf != "0" && (!is_valid_cpf_j(cpf) || buscaCliente_cpf_f(cpf) == -1));
 	}
+	if (cpf == "0") return;
 	//std::cout << cpf<<std::endl;
 	std::cout << "Nome: ";
 	scanf("\n");
@@ -238,7 +241,6 @@ void Banco::add_cliente()
     std::cin >> telefone;
 	//std::cout << telefone<<std::endl;
     std::cout << "Endereco: ";
-    scanf("\n");
     std::getline(std::cin, endereco);
     //std::cout << endereco<<std::endl;
 	if (opcaoCliente == 1) {
@@ -271,7 +273,7 @@ void Banco::add_cliente()
         } while (is_valid_data(dia, mes, ano) == false);
         contrato = intToStr(dia, mes, ano);
 
-        PessoaJuridica *pers=new PessoaJuridica(nome, cpf, endereco, telefone, email,cnpj, ramo, fundacao, contrato) ;
+        PessoaJuridica *pers = new PessoaJuridica(nome, cpf, endereco, telefone, email, cnpj, ramo, fundacao, contrato) ;
 		listaClientes_j = (PessoaJuridica * *)realloc(listaClientes_j, sizeof(PessoaJuridica*) * (PessoaJuridica::count_j));
 		listaClientes_j[PessoaJuridica::count_j - 1] = pers;
     }
@@ -596,7 +598,7 @@ int Banco::buscaCliente_cpf_j(std::string cpf) {
 	}
 
     if (listaClientes_j[itr-1] == listaClientes_j[PessoaJuridica::count_j-1] && flag == 0) {
-        std::cout << "CPF nao encontrado." << '\n';
+        //std::cout << "CPF nao encontrado." << '\n';
         return -1;
     }
 
@@ -618,7 +620,7 @@ int Banco::buscaCliente_cpf_f(std::string cpf) {
 	}
 
 	if (it == PessoaFisica::count_f && flag == 0) {
-		std::cout << "CPF nao encontrado." << '\n';
+		//std::cout << "CPF nao encontrado." << '\n';
 		return -1;
 	}
 	return  j;
@@ -670,7 +672,7 @@ void Banco::novoLancamento_c(std::string numeroBusca, float valor, int operacao)
 {
     int aux = this->buscaContaNum_c(numeroBusca);
     if (aux != -1) {
-        (listaContas_c[aux])->novoLancamento(valor, operacao);
+        (listaContas_c[aux - 1])->novoLancamento(valor, operacao);
     }
 }
 
@@ -678,7 +680,7 @@ void Banco::novoLancamento_p(std::string numeroBusca, float valor, int operacao)
 {
 	int aux = this->buscaContaNum_p(numeroBusca);
 	if (aux != -1) {
-		(listaContas_p[aux])->novoLancamento(valor, operacao);
+		(listaContas_p[aux - 1])->novoLancamento(valor, operacao);
 	}
 }
 
@@ -686,13 +688,13 @@ void Banco::get_lancamento_p(std::string numeroBusca) {
     int numeroIteracoes = this->buscaContaNum_p(numeroBusca);
 
     if ( numeroIteracoes != -1 )
-        (listaContas_p[numeroIteracoes])->getLancamentos();
+        (listaContas_p[numeroIteracoes - 1])->getLancamentos();
 }
 
 void Banco::get_lancamento_c(std::string numeroBusca) {
 	int numeroIteracoes = this->buscaContaNum_c(numeroBusca);
 	if (numeroIteracoes != -1)
-		(listaContas_c[numeroIteracoes])->getLancamentos();
+		(listaContas_c[numeroIteracoes - 1])->getLancamentos();
 }
 
 void Banco::get_montante()

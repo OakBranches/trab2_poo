@@ -21,7 +21,7 @@ Conta::Conta(std::string CPF, std::string nconta,
 {
     this->saldo_atual = saldo;
     num_contas++;
-
+    counter = 0;
     std::cout << "Conta criada com sucesso!" << std::endl;
 }
 
@@ -64,8 +64,7 @@ Lancamentos Conta::getList() const
 /* Mostra na tela historico de lancamentos(extrato) */
 void Conta::getLancamentos() const
 {
-
-    std::cout << this->getList().toString() << '\n';
+    std::cout << lancamentos.toString(this->counter) << '\n';
     std::cout << "Saldo final: " << std::fixed
               << std::setprecision(2) << getSaldo();
     std::cout << std::endl;
@@ -85,11 +84,13 @@ void Conta::novoLancamento(float valor, int operacao)
     if (operacao == 2 && this->saldo_atual - valor >= 0) {
         this->saldo_atual -= valor;
         valor *= (-1);
-        this->getList().novoLancamento(valor);
+        this->counter++;
+        this->getList().novoLancamento(valor, this->counter);
     }
     else if (operacao == 1 && valor > 0) {
         this->saldo_atual += valor;
-        this->getList().novoLancamento(valor);
+        this->counter++;
+        this->getList().novoLancamento(valor, this->counter);
     }
 	else std::cout << "Operacao invalida." << '\n';
 	std::cout << "saldo atual :" << getSaldo() << std::endl;

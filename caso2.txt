@@ -41,11 +41,10 @@ f
 2
 1
 2
-11223344556
+01234567899
 pj1
 pj1@poomail.com
 7977-7777
-rua x,bairro y, casa z
 12345678/1234-12
 vendas
 16 11 2019
@@ -65,7 +64,6 @@ j
 pj2
 pj2@poomail.com
 7777-7777
-rua x2,bairro y2, casa z2
 12345678/1234-13
 vendas
 16 11 2019
@@ -101,5 +99,5 @@ j
 4
 1
 17
-
+0
 

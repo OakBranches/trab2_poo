@@ -34,7 +34,7 @@ class Conta
 
         /* Contador para numero de contas */
         static int num_contas;
-
+        int counter;
     private:
         Lancamentos lancamentos;
         const std::string cpf;

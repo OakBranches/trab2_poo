@@ -10,16 +10,11 @@ class Lancamentos
         Lancamentos();
         ~Lancamentos();
         /* setters */
-        void novoLancamento(float);
+        void novoLancamento(float, int);
         /* getters */
-        std::string toString() const;
-        int getNumLancamentos() const;
-
-    protected:
-
+        std::string toString(int) const;
     private:
-        float** listaLancamentos;
-        int* numLancamentos;
+        float* listaLancamentos;
 		int destroid;
 };
 

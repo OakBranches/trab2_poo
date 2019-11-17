@@ -4,58 +4,34 @@
 #include <iostream>
 #include<algorithm>
 
-
 Lancamentos::Lancamentos()
 {
 	destroid = 0;
-	numLancamentos = new int[1];
-	numLancamentos[0] = 0;
-	//ctor
-	listaLancamentos = new float*[1];
-	listaLancamentos[0] = new float[1];
-	listaLancamentos[0][0] = 0;
+	listaLancamentos = new float[100];
 }
 
 Lancamentos::~Lancamentos()
 {
     //dtor
-	if (destroid) {
-		delete[](listaLancamentos[0]);
+	if (destroid)
 		delete[](listaLancamentos);
-		delete[](numLancamentos);
-	}
-	
 }
 
-void Lancamentos::novoLancamento(float valor)
+void Lancamentos::novoLancamento(float valor, int counter)
 {
-    //se o valor for valido, ie, maior ou igual a um centavo,
-    //guarda o valor atual e aloca uma posicao nova na memoria
-    //para o lancamento seguinte e guarda o valor 0 para controle
-    numLancamentos[0]+=1;
-    float* vet = new float[numLancamentos[0]];
-	for (int i = 0; i < numLancamentos[0]; i++) {
-		vet[i] = listaLancamentos[0][i];
-	}
-	delete[] this->listaLancamentos[0];
-    this->listaLancamentos[0] = vet;
-    this->listaLancamentos[0][numLancamentos[0]-1] = valor;
-
-}
-
-int Lancamentos::getNumLancamentos() const
-{
-    return *(this->numLancamentos);
+    //guarda o valor atual em um vetor
+    this->listaLancamentos[counter - 1] = valor;
 }
 
 //toString()
-std::string Lancamentos::toString() const
+std::string Lancamentos::toString(int counter) const
 {
     std::ostringstream lancamentosStr;
+    int i;
     lancamentosStr << "Lancamentos da conta:" << "\n";
-    for (int i = 0; i < getNumLancamentos(); i++) {
-
-			lancamentosStr << std::fixed << std::setprecision(2) << listaLancamentos[0][i] << "\n";
-    }
+    for (i = 0; i < counter; i++)
+        if (listaLancamentos[i] != 0.00f) {
+            lancamentosStr << std::fixed << std::setprecision(2) << listaLancamentos[i] << "\n";
+        }
     return lancamentosStr.str();
 }

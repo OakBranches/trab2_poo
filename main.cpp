@@ -21,7 +21,7 @@ int main()
     float valor, novolimite;
 
     do {
-		
+
         cout << "O que deseja fazer?" << '\n'
              << " 1- Adicionar um cliente" << '\n'
              << " 2- Alterar os dados de um cliente" << '\n'
@@ -33,12 +33,12 @@ int main()
              << " 8- Ver os lancamentos de uma conta" << '\n'
              << " 9- Alterar limite do cheque especial de uma conta corrente" << '\n'
              << "10- Ver todas as contas" << '\n'
-             << "11- Ver total de contas" << '\n' 
+             << "11- Ver total de contas" << '\n'
              << "12- Ver total de contas corrente" << '\n'
              << "13- Ver total de contas poupanca" << '\n'
              << "14- Ver total de pessoas fisicas " << '\n'
-             << "15- Ver total de pessoas juridicas " << '\n'   
-             << "16- Ver total de clientes e de contas" << '\n'    
+             << "15- Ver total de pessoas juridicas " << '\n'
+             << "16- Ver total de clientes e de contas" << '\n'
              << "17- Ver montante total do banco" << '\n'
              << " 0- Sair" << '\n';
         cin >> opNum;
@@ -121,7 +121,7 @@ int main()
                 break;
             }
             case (12): {
-                cout << "Total de contas corrente = " << ContaCorrente::count_chain 
+                cout << "Total de contas corrente = " << ContaCorrente::count_chain
                         << '\n';
                 break;
             }
@@ -152,9 +152,10 @@ int main()
             default:
                 cout << "Opcao nao disponivel. Tente novamente." << "\n\n";
 
-				
+
         }
     } while (opNum);
 	banco.~Banco();
+	system("pause");
     return 0;
 }

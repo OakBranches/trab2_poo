@@ -22,7 +22,7 @@ public:
     //toString
     virtual std::string toString() const;
 	//lancamento
-	void novoLancamento(float, int);
+	virtual void novoLancamento(float, int);
     /* Contador para tipo conta corrente */
     static int count_chain;
 
