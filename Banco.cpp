@@ -58,7 +58,7 @@ Banco::~Banco() {
 bool Banco::is_ContaCorrente() {
 	int i;
 	do {
-		std::cout << "Digite o tipo de Conta: \n1-Conta Corrente|2-Conta Poupanca\n";
+		std::cout << "Digite o tipo de Conta: (1- Conta Corrente | 2- Conta Poupanca)\n";
 		std::cin >> i;
 	} while (i != 1 && i != 2);
 	return(i == 1);
@@ -100,24 +100,26 @@ void Banco::add_conta_c()
   //Cria uma conta nova(se o numero for valido);
   if (is_valid_numConta_c(numero_conta)) {
     if (tipo[0] == 'f'){
-      do {
-          std::cout << "Digite os dados da conta: " << "\n" << "CPF (ja cadastrado): ";
-          std::cin >> cpf;
-	    } while (buscaCliente_cpf_f(cpf) == -1);
+        do {
+            std::cout << "Digite os dados da conta: " << "\n" << "CPF (ja cadastrado), ou '0' (zero) para cancelar: ";
+            std::cin >> cpf;
+        } while (buscaCliente_cpf_f(cpf) == -1 && cpf.compare("0") != 0);
     }
-	  if (tipo[0] == 'j') {
-      do {
-        std::cout << "Digite os dados da conta: " << '\n' << "CPF (ja cadastrado): ";
-        std::cin >> cpf;
-      } while(buscaCliente_cpf_j(cpf) == -1);
-      do {
-	      std::cout << "Digite o CNPJ" << "\n" ;
-		    std::cin >> cnpj;
-      } while (!is_valid_cnpj(cnpj));
-	  }
+
+    if (tipo[0] == 'j') {
     do {
-      std::cout << "Data de abertura, no formato: 'dia mes ano': " << "\n";
-      std::cin >> dia >> mes >> ano;
+        std::cout << "Digite os dados da conta: " << '\n' << "CPF (ja cadastrado), ou '0' (zero) para cancelar: ";
+        std::cin >> cpf;
+    } while(buscaCliente_cpf_j(cpf) == -1 || cpf.compare("0") != 0);
+    if (cpf.compare("0") == 0) return;
+    do {
+        std::cout << "Digite o CNPJ" << "\n" ;
+        std::cin >> cnpj;
+      } while (!is_valid_cnpj(cnpj));
+    }
+    do {
+        std::cout << "Data de abertura, no formato: 'dia mes ano': " << "\n";
+        std::cin >> dia >> mes >> ano;
     } while (is_valid_data(dia, mes, ano) == false);
     Data data(dia, mes, ano);
     std::cout << "Limite do cheque especial:" << "\n";
@@ -160,10 +162,10 @@ void Banco::add_conta_p()
 	//Cria uma conta nova(se o numero for valido);
 	if (is_valid_numConta_p(numero_conta)) {
 		do {
-			std::cout << "Digite os dados da conta: " << "\n" << "CPF (ja cadastrado): ";
+			std::cout << "Digite os dados da conta: " << "\n" << "CPF (ja cadastrado), ou '0' (zero) para cancelar: ";
 			std::cin >> cpf;
-		} while (buscaCliente_cpf_f(cpf) < 0);
-
+		} while (buscaCliente_cpf_f(cpf) < 0 && cpf.compare("0") != 0);
+        if (cpf.compare("0") == 0) return;
 		do {
 			std::cout << "Data de abertura, no formato: 'dia mes ano': " << "\n";
 			std::cin >> dia >> mes >> ano;
@@ -171,11 +173,11 @@ void Banco::add_conta_p()
 		Data datac(dia, mes, ano);
 		std::cout << "Saldo inicial:" << "\n";
 		std::cin >> saldo;
-		int b =ContaPoupanca::count_poup;
+		int b = ContaPoupanca::count_poup;
 		ContaPoupanca* a = new ContaPoupanca(cpf, numero_conta, datac, saldo);
 		listaContas_p = (ContaPoupanca**)realloc(listaContas_p, sizeof(ContaPoupanca*) * (ContaPoupanca::count_poup ));
 		listaContas_p[ContaPoupanca::count_poup-1] = a;
-		
+
 		}
 	else
 		std::cout << "Numero ja utilizado. Tente novamente." << "\n";
@@ -365,7 +367,7 @@ void Banco::get_contas()
 	for (itr = 0; listaContas_c[itr-1] != listaContas_c[ContaPoupanca::count_poup - 1]; itr++) {
 		std::cout<<listaContas_p[itr]->toString() << std::endl;
 	}
-	
+
 }
 
 void Banco::get_lancamento(std::string s)
@@ -418,7 +420,7 @@ void Banco::rmv_conta(std::string retirar) {
 	int i;
 	std::cout << "Escolha o tipo de conta: (1- Conta Corrente|2- Conta Poupanca)" << '\n';
 	std::cin >> i;
-	if (i == 2) {
+	if (i == 2 && ContaCorrente::count_chain > 0) {
 		std::cout << "removendo conta poupanca\n";
 		int itr;
 
@@ -426,14 +428,14 @@ void Banco::rmv_conta(std::string retirar) {
 			;
 		}
 		if (itr != ContaCorrente::count_chain-1) {
-			delete[]  listaContas_p[itr];
+			delete[] listaContas_p[itr];
 			itr = NULL;
 		}
 		else {
 			std::cout << "conta nao encontrada\n";
 		}
 	}
-	else {
+	else if (ContaPoupanca::count_poup > 0) {
 		int it;
 		std::cout << "removendo conta corrente\n";
 		for (it = 0; listaContas_c[it] != listaContas_c[ContaCorrente::count_chain - 1]
@@ -447,7 +449,9 @@ void Banco::rmv_conta(std::string retirar) {
 			std::cout << "conta nao encontrada\n";
 		}
 	}
-
+    if (ContaPoupanca::count_poup == 0 && ContaCorrente::count_chain == 0) {
+        std::cout << "nenhuma conta cadastrada\n";
+    }
 }
 
 /* to String */
@@ -481,7 +485,7 @@ bool Banco::is_valid_numConta_p(std::string numero)
 		if (listaContas_p[itr]->getNum().compare(numero) == 0) {
 			std::cout << "out\n";
 			return false;
-			
+
 		}
 	}
 	return true;
@@ -555,11 +559,12 @@ bool Banco::bissexto (int ano) {
 }
 
 int Banco::buscaCliente_cnpj(std::string cnpj) {
+
 	int itr;
 	int i = 0;
         int flag = 0;
 	//procura se o cpf inserido esta cadastrado
-	for (itr = 0; listaClientes_j[itr] != listaClientes_j[PessoaJuridica::count_j-1] && (listaClientes_j[itr])->get_cpf().compare(cnpj) != 0; itr++) {
+	for (itr = 0; itr < PessoaJuridica::count_j-1 && (listaClientes_j[itr])->get_cpf().compare(cnpj) != 0; itr++) {
             if ((listaClientes_j[itr])->getCNPJ().compare(cnpj)==0) {
                 flag = 1;
                 i++;
@@ -568,7 +573,7 @@ int Banco::buscaCliente_cnpj(std::string cnpj) {
             i++;
 	}
 
-	if (listaClientes_j[itr] == listaClientes_j[PessoaJuridica::count_j-1 ]&& flag == 0 && (listaClientes_j[itr])->getCNPJ().compare(cnpj) != 0) {
+	if (itr == PessoaJuridica::count_j-1 && flag == 0) {
 		std::cout << "CNPJ nao encontrado." << '\n';
 		return -1;
 	}
@@ -581,16 +586,16 @@ int Banco::buscaCliente_cpf_j(std::string cpf) {
     int i = 0;
     int flag = 0;
     //procura se o cpf inserido esta cadastrado
-	for (itr = 0; listaClientes_j[itr] != listaClientes_j[PessoaJuridica::count_j-1] && (listaClientes_j[itr])->get_cpf().compare(cpf); itr++) {
-            if ((listaClientes_j[itr])->get_cpf().compare(cpf)==0){
-                flag = 1;
-                i++;
-                break;
-            }
+	for (itr = 0; itr < PessoaJuridica::count_j; itr++) {
+        if ((listaClientes_j[itr])->get_cpf().compare(cpf) == 0){
+            flag = 1;
             i++;
+            break;
+        }
+        i++;
 	}
 
-    if (listaClientes_j[itr] == listaClientes_j[PessoaJuridica::count_j-1] && flag == 0 &&( listaClientes_j[itr])->get_cpf().compare(cpf) != 0) {
+    if (listaClientes_j[itr-1] == listaClientes_j[PessoaJuridica::count_j-1] && flag == 0) {
         std::cout << "CPF nao encontrado." << '\n';
         return -1;
     }
@@ -601,10 +606,10 @@ int Banco::buscaCliente_cpf_j(std::string cpf) {
 int Banco::buscaCliente_cpf_f(std::string cpf) {
 	int it = 0;
 	int j = 0;
-  int flag = 0;
+    int flag = 0;
 	//procura se o cpf inserido esta cadastrado
-	for (it = 0; listaClientes_f[it] != listaClientes_f[PessoaFisica::count_f-1] && (listaClientes_f[it])->get_cpf().compare(cpf); it++) {
-		if ((listaClientes_f[it])->get_cpf().compare( cpf)==0) {
+	for (it = 0; it < PessoaFisica::count_f; it++) {
+		if ((listaClientes_f[it])->get_cpf().compare( cpf) == 0) {
                 flag = 1;
                 j++;
                 break;
@@ -612,7 +617,7 @@ int Banco::buscaCliente_cpf_f(std::string cpf) {
             j++;
 	}
 
-	if (it== PessoaFisica::count_f-1 && flag == 0 && (listaClientes_f[it])->get_cpf().compare(cpf) != 0) {
+	if (it == PessoaFisica::count_f && flag == 0) {
 		std::cout << "CPF nao encontrado." << '\n';
 		return -1;
 	}
@@ -623,15 +628,15 @@ int Banco::buscaContaNum_c(std::string numeroBusca) {
 	int it;
 	int  j = 0;
 	int flag = 0;
-	for (it = 0; listaContas_c[it] != listaContas_c[ContaCorrente::count_chain-1] && listaContas_c[it]->getNum().compare(numeroBusca) != 0; it++) {
-		if ((listaContas_c[it])->getNum().compare(numeroBusca)==0) {
+	for (it = 0; it < ContaCorrente::count_chain; it++) {
+		if ((listaContas_c[it])->getNum().compare(numeroBusca) == 0) {
 			flag = 1;
 			j++;
 			break;
 		}
 		j++;
 	}
-	if (listaContas_c[it] == listaContas_c[ContaCorrente::count_chain-1] && !flag && (listaContas_c[it])->getNum().compare(numeroBusca) != 0) {
+	if (it == ContaCorrente::count_chain && !flag) {
 		std::cout << "Conta nao encontrada." << '\n';
 		return -1;
 	}
@@ -644,7 +649,7 @@ int Banco::buscaContaNum_p(std::string numeroBusca) {
     int itr;
     int i = 0;
 	int flag = 0;
-    for (itr = 0; listaContas_p[itr] != listaContas_p[ContaPoupanca::count_poup-1 ]&& (listaContas_p[itr])->getNum().compare(numeroBusca) != 0; itr++) {
+    for (itr = 0; itr < ContaPoupanca::count_poup; itr++) {
 		if ((listaContas_p[itr])->getNum().compare(numeroBusca)==0) {
 			i++;
 			flag = 1;
@@ -652,7 +657,7 @@ int Banco::buscaContaNum_p(std::string numeroBusca) {
 		}
         i++;
     }
-    if (listaContas_p[itr] == listaContas_p[ContaPoupanca::count_poup-1] && !flag && (listaContas_p[itr])->getNum().compare(numeroBusca) != 0) {
+    if (itr == ContaPoupanca::count_poup && !flag) {
         std::cout << "Conta nao encontrada." << '\n';
 		return -1;
     }
@@ -679,7 +684,7 @@ void Banco::novoLancamento_p(std::string numeroBusca, float valor, int operacao)
 
 void Banco::get_lancamento_p(std::string numeroBusca) {
     int numeroIteracoes = this->buscaContaNum_p(numeroBusca);
- 
+
     if ( numeroIteracoes != -1 )
         (listaContas_p[numeroIteracoes])->getLancamentos();
 }
