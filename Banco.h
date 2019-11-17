@@ -83,6 +83,8 @@ class Banco
       int buscaCliente_cnpj(std::string); //Busca um cnpj de cliente cadastrado;
       int buscaContaNum_c(std::string);
       int buscaContaNum_p(std::string);    //Busca a conta com o numero respectivo;
+      int buscaContaCPF_c(std::string);
+      int buscaContaCPF_p(std::string);
 };
 
 #endif /* BANCO_H_ */
