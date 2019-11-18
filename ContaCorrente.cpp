@@ -57,7 +57,7 @@ string ContaCorrente::getCNPJ() const {
 string ContaCorrente::toString() const {
     ostringstream aux;
     if (tipo_cliente == "j") {
-        aux << "Apresentando dados da conta..." << std::endl
+        aux << std::endl << "Apresentando dados da conta..." << std::endl
             << "Tipo de conta: " << this->tipo_cliente
             << std::endl << "Numero da conta: " << this->getNum() << std::endl
             << "CNPJ: " << this->cnpj << std::endl << "CPF: " << this->getCPF() << std::endl << "Data de abertura: " << this->getData().toString()

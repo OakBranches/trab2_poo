@@ -46,7 +46,7 @@ void Data::set_dia(int dia) {
                this->mes == 10 ||
                this->mes == 12) &&
                dia > 31 ) {
-        this->dia = dia - 31;
+        this->dia = dia%31;
         this->set_mes(this->get_mes() + 1);
     }
 
@@ -61,17 +61,24 @@ void Data::set_dia(int dia) {
                this->mes == 9 ||
                this->mes == 11) &&
                dia > 30 ) {
-        this->dia = dia - 30;
+        this->dia = dia%30;
         this->set_mes(this->get_mes() + 1);
     }
 
     else if (this->mes == 2 &&
              (dia > 0 && dia < 29) )
         this->dia = dia;
-    else if (this->mes == 2 && dia > 28) {
-        this->dia = dia - 28;
+    else if (this->mes == 2 && dia > 28 && !bissexto()) {
+        this->dia = dia%28;
         this->set_mes(this->get_mes() + 1);
     }
+    else if (this->mes == 2 && dia < 30 && bissexto())
+        this->dia = dia;
+    else if (this->mes == 2 && dia > 29 && bissexto()) {
+        this->dia = dia%29;
+        this->set_mes(this->get_mes() + 1);
+    }
+    if (this->dia == 0) this->dia = 1;
 }
 
 int Data::get_dia() const {
@@ -86,13 +93,19 @@ int Data::get_ano() const {
     return this->ano;
 }
 
+std::string Data::toString() const {
+    std::ostringstream aux;
+    aux << this->dia << "/" << this->mes << "/" << this->ano;
+    return aux.str();
+}
+
 int Data::toInt() const
 {
 	return dia+100*mes+10000*ano;
 }
 
-std::string Data::toString() const {
-    std::ostringstream aux;
-    aux << this->dia << "/" << this->mes << "/" << this->ano;
-    return aux.str();
+bool Data::bissexto () {
+    if ((this->ano % 400 == 0 || this->ano % 100 != 0) && this->ano % 4 == 0)
+        return true;
+    return false;
 }

@@ -22,8 +22,8 @@ Banco::Banco() {
 	listaClientes_j = new PessoaJuridica*[1];
 	listaClientes_f = new PessoaFisica*[1];
 	destroy = 0;
-	std::cout << "Por favor, digite a data atual: " << '\n';
     do {
+        std::cout << "Por favor, digite a data atual: " << '\n';
         std::cin >> dia >> mes >> ano;
     } while (this->is_valid_data(dia, mes, ano) == false);
     dataAtual = new Data(dia, mes, ano);
@@ -642,7 +642,6 @@ int Banco::buscaCliente_cnpj(std::string cnpj) {
 	}
 
 	if ((listaClientes_j[itr-1]) == (listaClientes_j[ PessoaJuridica::count_j-1 ])&& flag == 0) {
-		std::cout << "CNPJ nao encontrado." << '\n';
 		return -1;
 	}
 
