@@ -4,6 +4,7 @@
 #include<cstdlib>
 #include<iostream>
 #include<string>
+
 class Data {
 public:
     Data(int, int, int);
@@ -14,7 +15,9 @@ public:
     int get_dia() const;
     int get_mes() const;
     int get_ano() const;
+	int toInt() const;
     std::string toString() const;
+
 private:
     int dia, mes, ano;
 };

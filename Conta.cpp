@@ -20,6 +20,7 @@ Conta::Conta(std::string CPF, std::string nconta,
             num_conta(nconta), dataAbertura(data)
 {
     this->saldo_atual = saldo;
+	this->saldo_inicial = saldo;
     num_contas++;
     counter = 0;
     std::cout << "Conta criada com sucesso!" << std::endl;
@@ -50,6 +51,11 @@ float Conta::getSaldo() const
     return this->saldo_atual;
 }
 
+float Conta::getSaldo_inicial() const
+{
+	return saldo_inicial;
+}
+
 void Conta::printSaldo() const
 {
     std::cout << "Saldo atual: " << std::fixed << std::setprecision(2)
@@ -69,6 +75,25 @@ void Conta::getLancamentos() const
               << std::setprecision(2) << getSaldo();
     std::cout << std::endl;
 }
+void Conta::getLancamentos(Data a, Data j) const
+{
+	float ni = getSaldo_inicial(),nf=getSaldo_inicial();
+	int i;
+	for (i = 0; i < counter; i++) {
+		if (lancamentos.getListL()[i] != 0.00f && j.toInt() >= lancamentos.getData()[i]->toInt()) {
+			nf+=lancamentos.getListL()[i];
+		}
+	}
+	for (i = 0; i < counter; i++) {
+		if (lancamentos.getListL()[i] != 0.00f && a.toInt() > lancamentos.getData()[i]->toInt()) {
+			ni += lancamentos.getListL()[i];
+		}
+	}
+	std::cout << "Saldo inicial: " << ni;
+	std::cout << "\nSaldo final: " << std::fixed
+		<< std::setprecision(2) << nf;
+	std::cout << std::endl;
+}
 
 void Conta::setSaldo(float i )
 {
@@ -78,26 +103,25 @@ void Conta::setSaldo(float i )
 
 
 /* Atualiza a lista de lancamentos */
-void Conta::novoLancamento(float valor, int operacao)
+void Conta::novoLancamento(float valor, int operacao, Data* data)
 {
     //operacao = 1: credito, operacao = 2: debito
     if (operacao == 2 && this->saldo_atual - valor >= 0) {
         this->saldo_atual -= valor;
         valor *= (-1);
         this->counter++;
-        this->getList().novoLancamento(valor, this->counter);
+        this->getList().novoLancamento(valor, this->counter, data);
     }
     else if (operacao == 1 && valor > 0) {
         this->saldo_atual += valor;
         this->counter++;
-        this->getList().novoLancamento(valor, this->counter);
+        this->getList().novoLancamento(valor, this->counter, data);
     }
 	else std::cout << "Operacao invalida." << '\n';
-	std::cout << "saldo atual :" << getSaldo() << std::endl;
+	std::cout << "saldo atual: " << std::fixed << std::setprecision(2) << getSaldo() << std::endl;
 }
 
 /* toString */
-
 std::string Conta::toString() const {
     std::stringstream format;
     format << "Apresentando dados da conta..." << std::endl

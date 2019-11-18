@@ -1,8 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
-#include <list>
-
 #include "Conta.h"
 #include "Cliente.h"
 #include "Banco.h"
@@ -40,6 +38,8 @@ int main()
              << "15- Ver total de pessoas juridicas " << '\n'
              << "16- Ver total de clientes e de contas" << '\n'
              << "17- Ver montante total do banco" << '\n'
+             << "18- Terminar o dia atual" << '\n'
+			 << "19- Ver extrato da conta" << '\n'
              << " 0- Sair" << '\n';
         cin >> opNum;
         cout << '\n';
@@ -147,6 +147,17 @@ int main()
                 cout << '\n';
                 break;
             }
+            case (18): {
+                banco.next_data();
+                cout << '\n';
+                break;
+            }case (19): {
+				cout << "Digite o numero da conta:" << '\n';
+				cin >> num_conta;
+				banco.get_extrato(num_conta);
+				cout << '\n';
+				break;
+			}
             case (0):
                 break;
             default:

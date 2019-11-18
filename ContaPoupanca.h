@@ -4,7 +4,7 @@
 #include "Conta.h"
 #include <iostream>
 #include <string>
-#include <sstream> 
+#include <sstream>
 #include <iomanip>
 /* Nada eh feito, pois eh a propria classe conta */
 class ContaPoupanca : public Conta {

@@ -12,7 +12,7 @@ class Conta
 {
     public:
         /* Construtor e destrutor */
-            Conta(const std::string, const std::string, const Data, float);
+        Conta(const std::string, const std::string, const Data, float);
         ~Conta();
 
         /* Metodos get */
@@ -20,7 +20,9 @@ class Conta
         std::string getCPF() const;
         Data getData() const;
         float getSaldo() const;
-        void getLancamentos() const; //Extrato da conta;
+		float getSaldo_inicial() const;
+        void getLancamentos() const; 
+		void getLancamentos(Data,Data) const;//Extrato da conta;
         void printSaldo() const;
         Lancamentos getList() const;
 
@@ -30,7 +32,7 @@ class Conta
         /* Metodos set */
 		void setSaldo(float);
 
-        virtual void novoLancamento(float, int);
+        virtual void novoLancamento(float, int, Data*);
 
         /* Contador para numero de contas */
         static int num_contas;
@@ -41,6 +43,7 @@ class Conta
         const std::string num_conta;
         const Data dataAbertura;
         float saldo_atual;
+		float saldo_inicial;
 };
 
 #endif // CONTA_H

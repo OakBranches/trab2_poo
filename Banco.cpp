@@ -10,16 +10,24 @@
 #include <sstream>
 #include <iostream>
 #include <new>
+#include <iostream>
 #include <iomanip>
 #include <stdlib.h>
 #include <stdio.h>
 
 Banco::Banco() {
-	listaContas_c = new ContaCorrente * [1];
-	listaContas_p = new ContaPoupanca *[1];
+	int dia, mes, ano;
+	listaContas_c = new ContaCorrente*[1];
+	listaContas_p = new ContaPoupanca*[1];
 	listaClientes_j = new PessoaJuridica*[1];
 	listaClientes_f = new PessoaFisica*[1];
 	destroy = 0;
+	std::cout << "Por favor, digite a data atual: " << '\n';
+    do {
+        std::cin >> dia >> mes >> ano;
+    } while (this->is_valid_data(dia, mes, ano) == false);
+    dataAtual = new Data(dia, mes, ano);
+    std::cout << "Data atual: " << dataAtual->toString() << '\n';
 }
 
 Banco::~Banco() {
@@ -53,7 +61,19 @@ Banco::~Banco() {
 	}
 }
 
-/* M�todos */
+/* Metodos */
+
+Data* Banco::getData()
+{
+    return this->dataAtual;
+}
+
+void Banco::next_data()
+{
+    Data* data = getData();
+    data->set_dia(data->get_dia() + 1);
+    std::cout << "Data atual: " << data->toString() << '\n';
+}
 
 bool Banco::is_ContaCorrente() {
 	int i;
@@ -336,7 +356,7 @@ void Banco::set_cliente_f(std::string busca)
 }
 
 void Banco::set_cliente_j(std::string busca)
-{	
+{
 	std::string ramo,cnpj;
 	int dia, mes, ano;
 	std::cout << "Digite os dados do cliente: " << '\n';
@@ -383,6 +403,34 @@ void Banco::get_lancamento(std::string s)
 		get_lancamento_c(s);
 	else
 		get_lancamento_p(s);
+}
+
+void Banco::get_extrato(std::string s )
+{
+	int dia, mes,ano;
+	do {
+		std::cout << "Insira a data de inicio :\n";
+		std::cin >> dia >> mes >> ano;
+		if (!is_valid_data(dia, mes, ano))
+			std::cout << "\ndata invalida, tente novamente\n";
+	} while (!is_valid_data(dia, mes ,ano));
+	Data i(dia, mes, ano);
+	do {
+		std::cout << "Insira a data de termino :\n";
+		std::cin >> dia >> mes >> ano;
+		if (!is_valid_data(dia, mes, ano))
+			std::cout << "\ndata invalida, tente novamente\n";
+	} while (!is_valid_data(dia, mes, ano));
+	Data f(dia, mes, ano);
+	if (ano * 10000 + mes * 100 + dia < i.get_ano() * 10000 + i.get_mes() * 100 + i.get_dia()) {
+		std::cout << "Periodo de tempo invalido\n";
+		return;
+	}
+	bool c = is_ContaCorrente();
+	if (c)
+		get_lancamento_c(s,i,f);
+	else
+		get_lancamento_p(s,i,f);
 }
 
 void Banco::rmv_cliente_f(std::string retirar) {
@@ -595,6 +643,7 @@ int Banco::buscaCliente_cnpj(std::string cnpj) {
 
 	return i;
 }
+
 int Banco::buscaContaCPF_c(std::string cpfBusca) {
 	int itr;
 	int i = 0;
@@ -725,7 +774,7 @@ void Banco::novoLancamento_c(std::string numeroBusca, float valor, int operacao)
 {
     int aux = this->buscaContaNum_c(numeroBusca);
     if (aux != -1) {
-        (listaContas_c[aux - 1])->novoLancamento(valor, operacao);
+        (listaContas_c[aux - 1])->novoLancamento(valor, operacao, getData());
     }
 }
 
@@ -733,7 +782,7 @@ void Banco::novoLancamento_p(std::string numeroBusca, float valor, int operacao)
 {
 	int aux = this->buscaContaNum_p(numeroBusca);
 	if (aux != -1) {
-		(listaContas_p[aux - 1])->novoLancamento(valor, operacao);
+		listaContas_p[aux - 1]->novoLancamento(valor, operacao, getData());
 	}
 }
 
@@ -743,11 +792,22 @@ void Banco::get_lancamento_p(std::string numeroBusca) {
     if ( numeroIteracoes != -1 )
         (listaContas_p[numeroIteracoes - 1])->getLancamentos();
 }
+void Banco::get_lancamento_p(std::string numeroBusca,Data i, Data j) {
+	int numeroIteracoes = this->buscaContaNum_p(numeroBusca);
+
+	if (numeroIteracoes != -1)
+		(listaContas_p[numeroIteracoes - 1])->getLancamentos(i,j);
+}
 
 void Banco::get_lancamento_c(std::string numeroBusca) {
 	int numeroIteracoes = this->buscaContaNum_c(numeroBusca);
 	if (numeroIteracoes != -1)
 		(listaContas_c[numeroIteracoes - 1])->getLancamentos();
+}
+void Banco::get_lancamento_c(std::string numeroBusca, Data i, Data j) {
+	int numeroIteracoes = this->buscaContaNum_c(numeroBusca);
+	if (numeroIteracoes != -1)
+		(listaContas_c[numeroIteracoes - 1])->getLancamentos(i,j);
 }
 
 void Banco::get_montante()
