@@ -12,7 +12,7 @@ class Conta
 {
     public:
         /* Construtor e destrutor */
-            Conta(const std::string, const std::string, const Data, float);
+        Conta(const std::string, const std::string, const Data, float);
         ~Conta();
 
         /* Metodos get */
@@ -30,7 +30,7 @@ class Conta
         /* Metodos set */
 		void setSaldo(float);
 
-        virtual void novoLancamento(float, int);
+        virtual void novoLancamento(float, int, Data*);
 
         /* Contador para numero de contas */
         static int num_contas;

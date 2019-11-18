@@ -10,16 +10,24 @@
 #include <sstream>
 #include <iostream>
 #include <new>
+#include <iostream>
 #include <iomanip>
 #include <stdlib.h>
 #include <stdio.h>
 
 Banco::Banco() {
-	listaContas_c = new ContaCorrente * [1];
-	listaContas_p = new ContaPoupanca *[1];
+	int dia, mes, ano;
+	listaContas_c = new ContaCorrente*[1];
+	listaContas_p = new ContaPoupanca*[1];
 	listaClientes_j = new PessoaJuridica*[1];
 	listaClientes_f = new PessoaFisica*[1];
 	destroy = 0;
+	std::cout << "Por favor, digite a data atual: " << '\n';
+    do {
+        std::cin >> dia >> mes >> ano;
+    } while (this->is_valid_data(dia, mes, ano) == false);
+    dataAtual = new Data(dia, mes, ano);
+    std::cout << "Data atual: " << dataAtual->toString() << '\n';
 }
 
 Banco::~Banco() {
@@ -53,7 +61,19 @@ Banco::~Banco() {
 	}
 }
 
-/* M�todos */
+/* Metodos */
+
+Data* Banco::getData()
+{
+    return this->dataAtual;
+}
+
+void Banco::next_data()
+{
+    Data* data = getData();
+    data->set_dia(data->get_dia() + 1);
+    std::cout << "Data atual: " << data->toString() << '\n';
+}
 
 bool Banco::is_ContaCorrente() {
 	int i;
@@ -336,7 +356,7 @@ void Banco::set_cliente_f(std::string busca)
 }
 
 void Banco::set_cliente_j(std::string busca)
-{	
+{
 	std::string ramo,cnpj;
 	int dia, mes, ano;
 	std::cout << "Digite os dados do cliente: " << '\n';
@@ -725,7 +745,7 @@ void Banco::novoLancamento_c(std::string numeroBusca, float valor, int operacao)
 {
     int aux = this->buscaContaNum_c(numeroBusca);
     if (aux != -1) {
-        (listaContas_c[aux - 1])->novoLancamento(valor, operacao);
+        (listaContas_c[aux - 1])->novoLancamento(valor, operacao, getData());
     }
 }
 
@@ -733,7 +753,7 @@ void Banco::novoLancamento_p(std::string numeroBusca, float valor, int operacao)
 {
 	int aux = this->buscaContaNum_p(numeroBusca);
 	if (aux != -1) {
-		(listaContas_p[aux - 1])->novoLancamento(valor, operacao);
+		listaContas_p[aux - 1]->novoLancamento(valor, operacao, getData());
 	}
 }
 
