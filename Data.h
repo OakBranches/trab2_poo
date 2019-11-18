@@ -15,11 +15,12 @@ public:
     int get_dia() const;
     int get_mes() const;
     int get_ano() const;
-	int toInt() const;
+    int toInt() const;
     std::string toString() const;
 
 private:
     int dia, mes, ano;
+    bool bissexto();
 };
 
 #endif /* DATA_H */
