@@ -20,11 +20,11 @@ class Conta
         std::string getCPF() const;
         Data getData() const;
         float getSaldo() const;
-		float getSaldo_inicial() const;
+	float getSaldo_inicial() const;
         void getLancamentos() const; 
-		void getLancamentos(Data,Data) const;//Extrato da conta;
+	void getLancamentos(Data,Data) const;//Extrato da conta;
         void printSaldo() const;
-        Lancamentos getList() const;
+        Lancamentos getList();
 
         /* Metodo toString */
          std::string toString() const;

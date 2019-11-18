@@ -15,13 +15,13 @@ class Lancamentos
         void novoLancamento(float, int, Data*);
         /* getters */
         Data** getData() const;
-		float* getListL()const;
+	float* getListL()const;
         std::string toString(int) const;
-
+ 
+        bool destroid;
     private:
         float* listaLancamentos;
         Data** listaDatas;
-		int destroid;
 };
 
 #endif // LANCAMENTOS_H

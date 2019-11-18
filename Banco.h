@@ -64,7 +64,9 @@ class Banco
         ContaPoupanca** listaContas_p;
         PessoaJuridica** listaClientes_j;
         PessoaFisica** listaClientes_f;
-
+        //Habilitar desalocacao de memoria
+        bool destroy;
+        
     private:
         Data* dataAtual;
 
@@ -72,7 +74,6 @@ class Banco
         bool is_valid_numConta_c(std::string);
         bool is_valid_numConta_p(std::string);
         bool is_valid_data(int, int, int);
-        bool destroy;
 
         //validators cliente
         const bool is_valid_email(std::string);

@@ -32,33 +32,35 @@ Banco::Banco() {
 
 Banco::~Banco() {
 
-  /* Libera todas as contas */
-	if (destroy) {
-		while (ContaPoupanca::count_poup > 0) {
-			int atr;
-			for (atr = 0; listaContas_p[atr] != listaContas_p[ContaPoupanca::count_poup - 1]; atr++) {
-				delete[]  listaContas_p[atr];
-			}
-		}
-		while ((ContaCorrente::count_chain > 0)) {
-			int tr;
-			for (tr = 0; listaContas_c[tr] != listaContas_c[ContaCorrente::count_chain - 1]; tr++) {
-				delete[] listaContas_c[tr];
-			}
-		}
-		/* Libera todos os clientes */
-		while (PessoaFisica::count_f > 0) {
-			int itr;
-			for (itr = 0; listaClientes_f[itr] != listaClientes_f[PessoaFisica::count_f - 1]; itr++)
-				rmv_cliente_f((listaClientes_f[itr])->get_cpf());
-
-		}
-		while (PessoaJuridica::count_j > 0) {
-			int it;
-			for (it = 0; listaClientes_j[it] != listaClientes_j[PessoaJuridica::count_j - 1]; it++)
-				rmv_cliente_j((listaClientes_j[it])->get_cpf());
-		}
-	}
+    /* Libera todas as contas */
+    if (destroy) {
+        Lancamentos aux;
+        while (ContaPoupanca::count_poup > 0) {
+            for (int atr = 0; atr < ContaPoupanca::count_poup; atr++) {
+                aux = listaContas_p[atr]->getList();
+                aux.destroid = 1;
+                aux.~Lancamentos();
+                delete  listaContas_p[atr];
+            }
+        }
+        while ((ContaCorrente::count_chain > 0)) {
+            for (int tr = 0; tr < ContaCorrente::count_chain; tr++) {
+                aux = listaContas_c[tr]->getList();
+                aux.destroid = 1;
+                aux.~Lancamentos();
+                delete listaContas_c[tr];
+            }
+        }
+        /* Libera todos os clientes */
+        while (PessoaFisica::count_f > 0) {
+            for (int itr = 0; itr < PessoaFisica::count_f; itr++)
+                rmv_cliente_f((listaClientes_f[itr])->get_cpf());
+        }
+        while (PessoaJuridica::count_j > 0) {
+            for (int it = 0; it < PessoaJuridica::count_j; it++)
+                rmv_cliente_j((listaClientes_j[it])->get_cpf());
+        }
+    }
 }
 
 /* Metodos */
@@ -451,7 +453,10 @@ void Banco::rmv_cliente_f(std::string retirar) {
 		for (j = itr; j < PessoaFisica::count_f - 1; j++)
 			listaClientes_f[j] = listaClientes_f[j + 1];
 		delete listaClientes_f[j];
-		listaClientes_f = (PessoaFisica * *)realloc(listaClientes_f, sizeof(PessoaFisica*) * (PessoaFisica::count_f - 1));
+                if (PessoaFisica::count_f == 0)
+                    listaClientes_f = (PessoaFisica * *)realloc(listaClientes_f, sizeof(PessoaFisica*));
+                else
+                    listaClientes_f = (PessoaFisica * *)realloc(listaClientes_f, sizeof(PessoaFisica*) * (PessoaFisica::count_f));
 		std::cout << "Cliente removido com sucesso!!\n";
 	}
 	else std::cout << "CPF nao cadastrado\n";
@@ -474,7 +479,10 @@ void Banco::rmv_cliente_j(std::string retirar) {
 			for (j = itr; j < PessoaJuridica::count_j - 1; j++)
 				listaClientes_j[j] = listaClientes_j[j + 1];
 			delete listaClientes_j[j];
-			listaClientes_j = (PessoaJuridica * *)realloc(listaClientes_j, sizeof(PessoaJuridica*) * (PessoaJuridica::count_j - 1));
+                        if (PessoaJuridica::count_j == 0)
+                            listaClientes_j = (PessoaJuridica * *)realloc(listaClientes_j, sizeof(PessoaJuridica*));
+                        else
+                            listaClientes_j = (PessoaJuridica * *)realloc(listaClientes_j, sizeof(PessoaJuridica*) * (PessoaJuridica::count_j));
 			std::cout << "Cliente removido com sucesso!!\n";
 		}
 		else std::cout << "CPF nao cadastrado\n";
@@ -500,7 +508,10 @@ void Banco::rmv_conta(std::string retirar) {
 			for (j = itr; j < ContaCorrente::count_chain - 1; j++)
 				listaContas_c[j] = listaContas_c[j + 1];
 			delete listaContas_c[j];
-			listaContas_c = (ContaCorrente * *)realloc(listaContas_c, sizeof(ContaCorrente*) * (ContaCorrente::count_chain - 1));
+                        if (ContaCorrente::count_chain == 0)
+                            listaContas_c = (ContaCorrente * *)realloc(listaContas_c, sizeof(ContaCorrente*));
+                        else
+                            listaContas_c = (ContaCorrente * *)realloc(listaContas_c, sizeof(ContaCorrente*) * (ContaCorrente::count_chain ));
 			std::cout << "Conta removida com sucesso!!\n";
 		}
 		else {
@@ -521,7 +532,10 @@ void Banco::rmv_conta(std::string retirar) {
 			for (j = it; j < ContaPoupanca::count_poup - 1; j++)
 				listaContas_p[j] = listaContas_p[j + 1];
 			delete listaContas_p[j];
-			listaContas_p = (ContaPoupanca * *)realloc(listaContas_p, sizeof(ContaPoupanca*) * (ContaPoupanca::count_poup - 1));
+                        if (ContaPoupanca::count_poup == 0)
+                            listaContas_p = (ContaPoupanca * *)realloc(listaContas_p, sizeof(ContaPoupanca*));
+                        else
+                            listaContas_p = (ContaPoupanca * *)realloc(listaContas_p, sizeof(ContaPoupanca*) * (ContaPoupanca::count_poup));
 			std::cout << "Conta removida com sucesso!!\n";
 		}
 		else {

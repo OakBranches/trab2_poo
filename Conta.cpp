@@ -62,7 +62,7 @@ void Conta::printSaldo() const
               << this->getSaldo() << "\n\n";
 }
 
-Lancamentos Conta::getList() const
+Lancamentos Conta::getList()
 {
     return this->lancamentos;
 }

@@ -1,3 +1,11 @@
+/* INTEGRANTES DO GRUPO
+ * GABRIEL PENAJO 769712
+ * JOAO BUENO CALDAS 769657
+ * MATHEUS RAMOS  769703
+ * MATHEUS MATTIOLI 769783
+ */
+
+
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
@@ -166,7 +174,7 @@ int main()
 
         }
     } while (opNum);
-	banco.~Banco();
-	system("pause");
+    banco.destroy = true;
+    banco.~Banco();
     return 0;
 }
