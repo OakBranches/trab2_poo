@@ -407,24 +407,29 @@ void Banco::get_lancamento(std::string s)
 
 void Banco::get_extrato(std::string s )
 {
-	int dia, mes,ano;
-	do {
-		std::cout << "Insira a data de inicio :\n";
-		std::cin >> dia >> mes >> ano;
-		if (!is_valid_data(dia, mes, ano))
-			std::cout << "\ndata invalida, tente novamente\n";
-	} while (!is_valid_data(dia, mes ,ano));
-	Data i(dia, mes, ano);
-	do {
-		std::cout << "Insira a data de termino :\n";
-		std::cin >> dia >> mes >> ano;
-		if (!is_valid_data(dia, mes, ano))
-			std::cout << "\ndata invalida, tente novamente\n";
-	} while (!is_valid_data(dia, mes, ano));
-	Data f(dia, mes, ano);
-	if (ano * 10000 + mes * 100 + dia < i.get_ano() * 10000 + i.get_mes() * 100 + i.get_dia()) {
-		std::cout << "Periodo de tempo invalido\n";
-		return;
+	int dia, mes,ano,b;
+	std::cout << "Deseja extrato total?(1-sim|0-nao)\n";
+	std::cin >> b;
+	Data i(0,0,-10000), f(99,99,99999);
+	if (!b) {
+		do {
+			std::cout << "Insira a data de inicio :\n";
+			std::cin >> dia >> mes >> ano;
+			if (!is_valid_data(dia, mes, ano))
+				std::cout << "\ndata invalida, tente novamente\n";
+		} while (!is_valid_data(dia, mes, ano));
+		 i = Data(dia, mes, ano);
+		do {
+			std::cout << "Insira a data de termino :\n";
+			std::cin >> dia >> mes >> ano;
+			if (!is_valid_data(dia, mes, ano))
+				std::cout << "\ndata invalida, tente novamente\n";
+		} while (!is_valid_data(dia, mes, ano));
+		 f = Data(dia, mes, ano);
+		if (ano * 10000 + mes * 100 + dia < i.get_ano() * 10000 + i.get_mes() * 100 + i.get_dia()) {
+			std::cout << "Periodo de tempo invalido\n";
+			return;
+		}
 	}
 	bool c = is_ContaCorrente();
 	if (c)

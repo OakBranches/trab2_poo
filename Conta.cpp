@@ -77,20 +77,26 @@ void Conta::getLancamentos() const
 }
 void Conta::getLancamentos(Data a, Data j) const
 {
-	float ni = getSaldo_inicial(),nf=getSaldo_inicial();
+	float ni = getSaldo_inicial(),nf;
 	int i;
-	for (i = 0; i < counter; i++) {
-		if (lancamentos.getListL()[i] != 0.00f && j.toInt() >= lancamentos.getData()[i]->toInt()) {
-			nf+=lancamentos.getListL()[i];
-		}
-	}
 	for (i = 0; i < counter; i++) {
 		if (lancamentos.getListL()[i] != 0.00f && a.toInt() > lancamentos.getData()[i]->toInt()) {
 			ni += lancamentos.getListL()[i];
 		}
 	}
-	std::cout << "Saldo inicial: " << ni;
-	std::cout << "\nSaldo final: " << std::fixed
+	nf = ni;
+	std::cout << "Saldo inicial: " << std::fixed
+		<< std::setprecision(2)<< ni<<std::endl;
+	for (i = 0; i < counter; i++) {
+		if (lancamentos.getListL()[i] != 0.00f && j.toInt() >= lancamentos.getData()[i]->toInt() && a.toInt() <= lancamentos.getData()[i]->toInt()) {
+			nf+=lancamentos.getListL()[i];
+			std::cout << lancamentos.getListL()[i] <<" em "<<lancamentos.getData()[i]->toString()<< std::endl;
+		}
+	}
+
+
+
+	std::cout << "Saldo final: " << std::fixed
 		<< std::setprecision(2) << nf;
 	std::cout << std::endl;
 }
